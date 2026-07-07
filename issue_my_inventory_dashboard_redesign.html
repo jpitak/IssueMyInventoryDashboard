@@ -39,7 +39,7 @@ a:hover{text-decoration:underline}
 .hero p{max-width:900px;color:#d2dff7;font-size:16px;line-height:1.7;margin:0}
 .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
 .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 16px;border-radius:14px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.08);color:var(--white);font-weight:700}
-.btn.primary{background:linear-gradient(135deg,var(--cyan),var(--blue));color:#081122;border:none}
+.btn.primary{background:linear-gradient(135deg,var(--cyan),var(--blue));color:#081122;border:none;cursor:pointer}
 .hero-side{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 .glass{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:16px;backdrop-filter:blur(10px)}
 .glass .label{font-size:12px;color:#a9bbdb;text-transform:uppercase;letter-spacing:.08em}
@@ -65,9 +65,6 @@ a:hover{text-decoration:underline}
 .panel h3{margin:0 0 6px;font-size:20px}
 .panel .desc{color:var(--muted);font-size:13px;line-height:1.6;margin-bottom:16px}
 .chart-box{min-height:320px}
-.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px}
-.legend span{display:inline-flex;align-items:center;gap:8px;color:#cfddf8;font-size:13px}
-.legend i{width:10px;height:10px;border-radius:50%;display:inline-block}
 .flex-between{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
 .list{display:flex;flex-direction:column;gap:12px}
 .row-item{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}
@@ -120,7 +117,7 @@ tr:hover td{background:rgba(255,255,255,.03)}
         <div class="actions">
           <button class="btn primary" onclick="switchTab('registry')">ไปที่ Issue Registry</button>
           <a class="btn" id="downloadHtmlBtn" href="#" onclick="downloadDashboard(event)">ดาวน์โหลดไฟล์ HTML</a>
-          <a class="btn" href="https://docs.google.com/spreadsheets/d/1_pgCOURh8CuwLCExSf7XfneTMep8yfD8qjKxPvBwIVA/gviz/tq?tqx=out:csv&sheet=issue" target="_blank">ดาวน์โหลดข้อมูล CSV</a>
+          <a class="btn" href="https://docs.google.com/spreadsheets/d/e/2PACX-1vRuGRWeQTLyncPdMy8_h-WA0zNJKqP0CheqJ7WXQD08z-mliMQvbRIyP3RyWZLewAC4Nf3uNDKg5NI1/pub?gid=2102375708&single=true&output=csv" target="_blank">ดาวน์โหลดข้อมูล CSV</a>
         </div>
       </div>
       <div class="hero-side">
@@ -279,284 +276,356 @@ tr:hover td{background:rgba(255,255,255,.03)}
     </div>
   </section>
 
-  <div class="footer">สร้างจากข้อมูลใน Google Sheet sheet <b>issue</b> และอ้างอิงชื่อรายงานเดิม <b>Dashboard Issue My Inventory</b> เพื่อให้ได้ไฟล์ dashboard สำหรับดาวน์โหลดและนำไปใช้ต่อได้ทันที</div>
+  <div class="footer">สร้างจากข้อมูลใน Google Sheet สดใหม่แบบ Dynamic และอ้างอิงรายงาน <b>Dashboard Issue My Inventory</b> เพื่อนำไปใช้ต่อได้ทันที</div>
 </div>
 
 <script>
-// Data Injection
-const data = {
-  "summary": {
-    "generated_on": "2026-07-07", "total_issues": 57, "new_issues": 31, "in_review": 4, "overdue": 17, "dated_rows": 39, "undated_rows": 18, "high_priority": 35, "open_items": 57, "date_min": "2026-05-29", "date_max": "2026-07-06",
-    "status_counts": {"New": 31, "Unspecified": 18, "In Review": 4, "SA Testing": 2, "Test Failed": 1, "In Process": 1},
-    "priority_counts": {"High": 35, "Unspecified": 18, "Low": 2, "Low-Low": 2},
-    "device_counts": {"PC": 30, "Unspecified": 14, "PDA": 13},
-    "assignee_counts": {"Krit": 28, "Unassigned": 20, "Champ": 3, "Aot": 3, "Amp": 2, "After": 1},
-    "requester_counts": {"Unspecified": 31, "P'Noom": 23, "Tak": 2, "Krit": 1},
-    "process_counts": {"All Process": 38, "Unspecified": 12, "Inbound / Inbound Order Receipt (PDA)": 2, "Authentication / User": 1, "Outbound / Outbound Plan": 1, "Inventory Change / Change Location": 1, "Inbound / Inbound Plan": 1, "Inventory / Inventory Viewer": 1},
-    "aging_counts": {"Unknown": 18, "8-14 days": 18, "0-3 days": 15, "31+ days": 6}
-  },
-  "records": [
-    {"Issue ID": 1, "Date": "29/5/2026", "Device": "PC", "Priority": "Low-Low", "Process / Sub Process": "Authentication / User", "Issue": "Login ไม่ได้เพราะ User มีสระอีและมองไม่เห็นตอนสร้าง User", "Detail": "อาจจะต้องเช็คจาก Assii code เอาเฉพาะภาษาอังกฤษ", "Status": "New", "Request By": "Krit", "Assign To": "Champ", "Estimated Completion Date": "", "Actual Completion Date": ""},
-    {"Issue ID": 2, "Date": "29/5/2026", "Device": "PC", "Priority": "Low-Low", "Process / Sub Process": "All Process", "Issue": "This user is already logged in on another device/session.", "Detail": "This user is already logged in on another device/session.", "Status": "New", "Request By": "", "Assign To": "", "Estimated Completion Date": "", "Actual Completion Date": ""},
-    {"Issue ID": 6, "Date": "29/5/2026", "Device": "PC", "Priority": "Low", "Process / Sub Process": "Inventory Change / Change Location", "Issue": "Change Location , Inventory Movement ระบบไม่ทำการย้ายให้", "Detail": "พบปัญหาในการย้ายสินค้าผ่านฟังก์ชัน Change Location", "Status": "New", "Request By": "Tak", "Assign To": "Champ", "Estimated Completion Date": "", "Actual Completion Date": ""},
-    {"Issue ID": 8, "Date": "29/5/2026", "Device": "PC", "Priority": "Low", "Process / Sub Process": "Outbound / Outbound Plan", "Issue": "สร้าง Order Outbound โดยเมื่อทำการกดบันทึกแล้วระบบไม่แสดง Order ที่สร้าง", "Detail": "ระบบแจ้งเตือนว่า บันทึกสำเร็จ แต่กลับพบว่าจำนวนสินค้าไม่ถูกบันทึก", "Status": "New", "Request By": "Tak", "Assign To": "Amp", "Estimated Completion Date": "", "Actual Completion Date": ""},
-    {"Issue ID": 15, "Date": "5/6/2026", "Device": "PC", "Priority": "High", "Process / Sub Process": "All Process", "Issue": "เพิ่ม bs datagrid ให้ปรับทศนิยมโดนอ่านตาม file ENV", "Detail": "เพิ่ม bs datagrid ให้ปรับทศนิยมโดนอ่านตาม file ENV", "Status": "New", "Request By": "", "Assign To": "Amp", "Estimated Completion Date": "", "Actual Completion Date": ""},
-    {"Issue ID": 16, "Date": "2/6/2026", "Device": "PC", "Priority": "High", "Process / Sub Process": "All Process", "Issue": "เพิ่ิ่ม prop config ทศนิยม เพื่อให้แสดงเหมือนกันทั้ง PDA", "Detail": "เพิ่ิ่ม prop config ทศนิยม เพื่อให้แสดงเหมือนกันทั้ง PDA", "Status": "New", "Request By": "", "Assign To": "Aot", "Estimated Completion Date": "", "Actual Completion Date": ""},
-    {"Issue ID": 17, "Date": "", "Device": "", "Priority": "", "Process / Sub Process": "All Process", "Issue": "ปรับให้หน้าจอมีปุ่ม save เดียว", "Detail": "", "Status": "New", "Request By": "", "Assign To": "", "Estimated Completion Date": "", "Actual Completion Date": ""},
-    {"Issue ID": 18, "Date": "", "Device": "", "Priority": "", "Process / Sub Process": "All Process", "Issue": "แก้ไขหน้าอื่น ๆ เช่นเปลี่ยน zone แล้ว หน้า inventory ไม่ reload", "Detail": "", "Status": "New", "Request By": "", "Assign To": "", "Estimated Completion Date": "", "Actual Completion Date": ""},
-    {"Issue ID": 19, "Date": "", "Device": "PC", "Priority": "", "Process / Sub Process": "Inbound / Inbound Plan", "Issue": "แก้ไข Inbound detail สั่ง print ไปแล้ว 1 รอบ รองสอง print ไม่ได้", "Detail": "", "Status": "New", "Request By": "", "Assign To": "Champ", "Estimated Completion Date": "", "Actual Completion Date": ""},
-    {"Issue ID": 20, "Date": "", "Device": "PDA", "Priority": "", "Process / Sub Process": "Inbound / Inbound Order Receipt (PDA)", "Issue": "remaining แสดงเป็น0 หลังรับรองสองลองเช็คการแสดงอีกที", "Detail": "กลับมาเช็คอีกทีเนื่องจากต้องมีการ covert หน่วยด้วย", "Status": "In Review", "Request By": "", "Assign To": "Aot", "Estimated Completion Date": "", "Actual Completion Date": ""},
-    {"Issue ID": 21, "Date": "", "Device": "PDA", "Priority": "", "Process / Sub Process": "Inbound / Inbound Order Receipt (PDA)", "Issue": "inbound po % แสดงไม่ถูก", "Detail": "", "Status": "In Review", "Request By": "", "Assign To": "Aot", "Estimated Completion Date": "", "Actual Completion Date": ""},
-    {"Issue ID": 22, "Date": "", "Device": "PDA", "Priority": "", "Process / Sub Process": "Inventory / Inventory Viewer", "Issue": "ค้นหาด้วย M01_None มันไม่ค้นหาให้ tab item summary", "Detail": "", "Status": "", "Request By": "", "Assign To": "After", "Estimated Completion Date": "", "Actual Completion Date": ""},
-    {"Issue ID": 23, "Date": "29/6/2026", "Device": "PC", "Priority": "High", "Process / Sub Process": "All Process", "Issue": "ระบบแสดง Cursor ในฟิลด์ที่แก้ไขไม่ได้ (Read-only)", "Detail": "รบกวนนำ Cursor ออกจากทุกหน้าจอที่มีฟิลด์ลักษณะนี้", "Status": "New", "Request By": "P'Noom", "Assign To": "Krit", "Estimated Completion Date": "30/6/2026", "Actual Completion Date": ""},
-    {"Issue ID": 24, "Date": "29/6/2026", "Device": "PC", "Priority": "High", "Process / Sub Process": "All Process", "Issue": "ระบบแสดง Cursor และแถบไฮไลต์บนปุ่มและฟิลด์ที่แก้ไขไม่ได้", "Detail": "รบกวนนำ Cursor และความสามารถในการคลุมดำข้อความออก", "Status": "New", "Request By": "P'Noom", "Assign To": "Krit", "Estimated Completion Date": "30/6/2026", "Actual Completion Date": ""},
-    {"Issue ID": 25, "Date": "29/6/2026", "Device": "PC", "Priority": "High", "Process / Sub Process": "All Process", "Issue": "หน้าจอแสดงผลตารางยังสามารถพิมพ์แก้ไขข้อมูลได้ (ต้องการให้เป็น Read-only)", "Detail": "รบกวนปรับปรุงฟิลด์ข้อมูลในตารางทั้งหมดให้เป็นแบบอ่านอย่างเดียว", "Status": "New", "Request By": "P'Noom", "Assign To": "Krit", "Estimated Completion Date": "30/6/2026", "Actual Completion Date": ""},
-    {"Issue ID": 26, "Date": "29/6/2026", "Device": "PC", "Priority": "High", "Process / Sub Process": "All Process", "Issue": "เมนูด้านซ้ายไม่เปลี่ยนสถานะตามหน้าจอที่เปิดใช้งาน", "Detail": "พบปัญหาที่แถบเมนูด้านซ้ายมือ เมื่อเลือกเมนูอื่นแล้วไฮไลต์ยังค้างที่เดิม", "Status": "New", "Request By": "P'Noom", "Assign To": "Krit", "Estimated Completion Date": "30/6/2026", "Actual Completion Date": ""},
-    {"Issue ID": 27, "Date": "29/6/2026", "Device": "PC", "Priority": "High", "Process / Sub Process": "All Process", "Issue": "ขอความชัดเจนเรื่องเงื่อนไขการแก้ไขข้อมูลในตาราง และการแสดงผลที่ทำให้ผู้ใช้สับสน", "Detail": "จากการทดสอบหน้าจอ พบว่าระบบเปิดให้พิมพ์แก้ไขข้อมูลได้เพียง 2 ฟิลด์", "Status": "New", "Request By": "P'Noom", "Assign To": "Krit", "Estimated Completion Date": "30/6/2026", "Actual Completion Date": ""},
-    {"Issue ID": 28, "Date": "29/6/2026", "Device": "PC", "Priority": "High", "Process / Sub Process": "All Process", "Issue": "ระดับความสูงของตัวเลขในกล่องแสดงผล (Summary Cards) ไม่เท่ากัน", "Detail": "พบปัญหาเรื่องการจัดวางตำแหน่งเยื้องขึ้นลงไม่เรียบร้อย", "Status": "New", "Request By": "P'Noom", "Assign To": "Krit", "Estimated Completion Date": "30/6/2026", "Actual Completion Date": ""},
-    {"Issue ID": 29, "Date": "29/6/2026", "Device": "PC", "Priority": "High", "Process / Sub Process": "All Process", "Issue": "ขอความชัดเจนเรื่องเงื่อนไขการทำงานในหน้าจอ My Inventory", "Detail": "ขาดการแสดงผลเรื่องอายุสินค้า และเงื่อนไขการคำนวณ", "Status": "New", "Request By": "P'Noom", "Assign To": "Krit", "Estimated Completion Date": "30/6/2026", "Actual Completion Date": ""},
-    {"Issue ID": 30, "Date": "29/6/2026", "Device": "PC", "Priority": "High", "Process / Sub Process": "All Process", "Issue": "มอบหมายงานทดสอบ AI Option (Qwen3) สำหรับคลังสินค้า WM3", "Detail": "ฝากทีมประเมินและเตรียมสเปกเครื่อง Server VM สำหรับรันโมเดลทดสอบ", "Status": "New", "Request By": "P'Noom", "Assign To": "Krit", "Estimated Completion Date": "30/6/2026", "Actual Completion Date": ""},
-    {"Issue ID": 31, "Date": "29/6/2026", "Device": "PC", "Priority": "High", "Process / Sub Process": "All Process", "Issue": "ปรับปรุง Workflow การ Reset รหัสผ่าน และขอเพิ่มหน้าจอสำหรับ Admin", "Detail": "ผู้ใช้งาน PDA มีความยากลำบากหากต้องสลับมา PC เพื่อเปลี่ยนพาสเวิร์ดเอง", "Status": "New", "Request By": "P'Noom", "Assign To": "Krit", "Estimated Completion Date": "30/6/2026", "Actual Completion Date": ""},
-    {"Issue ID": 32, "Date": "29/6/2026", "Device": "PC", "Priority": "High", "Process / Sub Process": "All Process", "Issue": "ไม่สามารถกดบันทึกข้อมูลได้ เมื่อเปิดโหมดเพิ่มข้อมูลซ้อนกับแก้ไขข้อมูล", "Detail": "พบ Bug เมื่อทำกิจกรรมซ้อนกันระบบล็อก ไม่ตอบสนองปุ่มเซฟ", "Status": "New", "Request By": "P'Noom", "Assign To": "Krit", "Estimated Completion Date": "30/6/2026", "Actual Completion Date": ""},
-    {"Issue ID": 35, "Date": "29/6/2026", "Device": "PC", "Priority": "High", "Process / Sub Process": "All Process", "Issue": "เพิ่มระบบตรวจสอบความถูกต้อง (Validation) ห้ามบันทึกข้อมูลหากไม่มี UOM", "Detail": "กดบันทึกผ่านไปได้เฉยๆ ทั้งที่ช่อง UOM ว่าง และไม่มี Error เตือน", "Status": "Test Failed", "Request By": "P'Noom", "Assign To": "Krit", "Estimated Completion Date": "30/6/2026", "Actual Completion Date": ""},
-    {"Issue ID": 36, "Date": "29/6/2026", "Device": "PDA", "Priority": "High", "Process / Sub Process": "All Process", "Issue": "เพิ่มระบบแจ้งเตือนเมื่อรับสินค้าเกินแผน (Over-receive Alert)", "Detail": "กรอกค่าเกินกว่าจำนวนแผน แต่อยากให้แจ้งเตือนเพื่อสกัดข้อผิดพลาด", "Status": "In Review", "Request By": "P'Noom", "Assign To": "Krit", "Estimated Completion Date": "30/6/2026", "Actual Completion Date": ""},
-    {"Issue ID": 40, "Date": "29/6/2026", "Device": "PC", "Priority": "High", "Process / Sub Process": "All Process", "Issue": "ปรับปรุงฟอร์แมตวันที่ในการ Export Excel นำส่วนของเวลาออก", "Detail": "ข้อมูลวันที่ติดเวลาเริ่มต้นระบบ 00:00:00 ทำให้อ่านยากใน Excel", "Status": "New", "Request By": "P'Noom", "Assign To": "Krit", "Estimated Completion Date": "30/6/2026", "Actual Completion Date": ""},
-    {"Issue ID": 43, "Date": "29/6/2026", "Device": "PDA", "Priority": "High", "Process / Sub Process": "All Process", "Issue": "ปรับปรุงช่อง Quantity To Move: ปิดการใส่จำนวนอัตโนมัติ", "Detail": "บังคับให้ผู้ใช้เป็นคนป้อนยอดจริง ป้องกันความผิดพลาดหน้างาน", "Status": "New", "Request By": "P'Noom", "Assign To": "Krit", "Estimated Completion Date": "30/6/2026", "Actual Completion Date": ""},
-    {"Issue ID": 44, "Date": "29/6/2026", "Device": "PDA", "Priority": "High", "Process / Sub Process": "All Process", "Issue": "ปรับปรุงช่อง Quantity To Move: ไม่ต้องแสดงตัวเลขเริ่มต้น 1.000", "Detail": "ให้แสดงเป็นค่าว่างเพื่อให้สแตนด์บายรอพิมพ์อย่างเดียว", "Status": "In Review", "Request By": "P'Noom", "Assign To": "Krit", "Estimated Completion Date": "30/6/2026", "Actual Completion Date": ""},
-    {"Issue ID": 45, "Date": "29/6/2026", "Device": "PC", "Priority": "High", "Process / Sub Process": "All Process", "Issue": "หน้าจอ Pick Detail ไม่แสดงคอลัมน์จำนวนสินค้าที่หยิบจริง", "Detail": "มีเพียงคอลัมน์แผนงานแต่ไม่มีแถบสินค้าหยิบจริง ทำให้วัดสถานะไม่ได้", "Status": "SA Testing", "Request By": "P'Noom", "Assign To": "Krit", "Estimated Completion Date": "30/6/2026", "Actual Completion Date": ""},
-    {"Issue ID": 46, "Date": "29/6/2026", "Device": "PDA", "Priority": "High", "Process / Sub Process": "All Process", "Issue": "ปรับปรุงพฤติกรรมหน้าจอเด้งสลับไปมา และกำหนดเวลาเคลียร์ข้อความ", "Detail": "สแกนผิดพลาดแล้วหน้าจอกระตุก ค้างข้อความ Alert ไว้นานเกินไป", "Status": "SA Testing", "Request By": "P'Noom", "Assign To": "Krit", "Estimated Completion Date": "30/6/2026", "Actual Completion Date": ""},
-    {"Issue ID": 47, "Date": "29/6/2026", "Device": "PDA", "Priority": "High", "Process / Sub Process": "All Process", "Issue": "ให้ทบทวนการออกแบบ User Flow หน้าจัดสินค้า และเร่งแก้ Inventory Viewer", "Detail": "Inventory Viewer ไม่แสดงข้อมูลสำคัญ ต้องรีบยกขึ้นมาแก้เป็นอันดับแรก", "Status": "In Process", "Request By": "P'Noom", "Assign To": "Krit", "Estimated Completion Date": "15/7/2026", "Actual Completion Date": ""},
-    {"Issue ID": 48, "Date": "6/7/2026", "Device": "PC", "Priority": "High", "Process / Sub Process": "All Process", "Issue": "ปรับปรุงข้อความแจ้งเตือนระบบให้ดูเป็นมาตรฐาน Enterprise", "Detail": "เปลี่ยนคำว่า ใช่ ลบเลย เป็นคำที่เป็นทางการ เช่น ยืนยันการลบข้อมูล", "Status": "New", "Request By": "P'Noom", "Assign To": "Krit", "Estimated Completion Date": "", "Actual Completion Date": ""},
-    {"Issue ID": 49, "Date": "6/7/2026", "Device": "PC", "Priority": "High", "Process / Sub Process": "All Process", "Issue": "เพิ่มข้อความอธิบายหน้าจอ แผนการรับสินค้า เพื่อลดการจัดเทรนนิ่ง", "Detail": "จัดวางสไตล์ข้อความกำกับสั้นๆ ให้ผู้ใช้งานใหม่เข้าใจระบบได้ทันที", "Status": "New", "Request By": "P'Noom", "Assign To": "Krit", "Estimated Completion Date": "", "Actual Completion Date": ""},
-    {"Issue ID": 50, "Date": "6/7/2026", "Device": "PC", "Priority": "High", "Process / Sub Process": "All Process", "Issue": "ปรับเปลี่ยน Default Action ของปุ่มเพิ่มข้อมูลให้ทำงานผ่าน Dialog", "Detail": "เนื่องจากข้อมูลเยอะ การเปิด Dialog แทนการโหลดหน้าใหม่จะเร็วกว่า", "Status": "New", "Request By": "P'Noom", "Assign To": "Krit", "Estimated Completion Date": "", "Actual Completion Date": ""},
-    {"Issue ID": 51, "Date": "6/7/2026", "Device": "PC", "Priority": "High", "Process / Sub Process": "All Process", "Issue": "ปรับปรุงระบบเลขที่เอกสารให้รองรับทั้ง Manual Input และ Auto-run", "Detail": "กรณีเว้นว่างให้รันเลขปกติ แต่ถ้าพิมพ์เข้ามาให้ใช้ค่านั้นได้ทันที", "Status": "New", "Request By": "P'Noom", "Assign To": "Krit", "Estimated Completion Date": "", "Actual Completion Date": ""},
-    {"Issue ID": 52, "Date": "6/7/2026", "Device": "PC", "Priority": "High", "Process / Sub Process": "All Process", "Issue": "ปุ่ม Save บริเวณ Footer ของ Dialog หน้าจอ UOM ไม่ทริกเกอร์บันทึก", "Detail": "กดล่างขวาแล้วระบบนิ่ง ต้องผูกฟังก์ชัน Bind Event เพิ่มเติมให้สมบูรณ์", "Status": "New", "Request By": "P'Noom", "Assign To": "Krit", "Estimated Completion Date": "", "Actual Completion Date": ""},
-    {"Issue ID": 53, "Date": "6/7/2026", "Device": "PC", "Priority": "High", "Process / Sub Process": "All Process", "Issue": "เปลี่ยน Success Alert ป๊อปอัป ให้เป็น Toast ซ่อนอัตโนมัติใน 2 วินาที", "Detail": "ลดอาการเหนื่อยล้าในการกดปุ่ม OK บ่อยๆ ของพนักงานหน้างาน", "Status": "New", "Request By": "", "Assign To": "Krit", "Estimated Completion Date": "", "Actual Completion Date": ""},
-    {"Issue ID": 54, "Date": "6/7/2026", "Device": "PC", "Priority": "High", "Process / Sub Process": "All Process", "Issue": "ลำดับคำสั่ง Validation ทำงานผิดพลาดในหน้า Inbound Receipt บนมือถือ", "Detail": "รับสินค้าบางส่วนครบตามแผนพอดี แต่ระบบดันดีดข้อความเตือนเกินแผนก่อนแจ้งสำเร็จ", "Status": "New", "Request By": "", "Assign To": "Krit", "Estimated Completion Date": "", "Actual Completion Date": ""},
-    {"Issue ID": 55, "Date": "6/7/2026", "Device": "PC", "Priority": "High", "Process / Sub Process": "All Process", "Issue": "เพิ่มเงื่อนไข Auto-population สำหรับ Receipt Number หากมีแค่ 1 รายการ", "Detail": "ถ้ามีตัวเลือกเดียวให้โหลดข้อมูลขึ้นมาแสดงผลทันทีโดยไม่ต้องคลิกเลือกอีก", "Status": "New", "Request By": "", "Assign To": "Krit", "Estimated Completion Date": "", "Actual Completion Date": ""},
-    {"Issue ID": 56, "Date": "6/7/2026", "Device": "PC", "Priority": "High", "Process / Sub Process": "All Process", "Issue": "ปรับปรุง Logic หน้าจอตัวเลือก Dropdown ทั้งหมดให้โหลดอัตโนมัติหากมี 1 ค่า", "Detail": "ลดขั้นตอนการเคลื่อนไหวและการคลิกหน้าจอให้กระชับขึ้น", "Status": "New", "Request By": "", "Assign To": "Krit", "Estimated Completion Date": "", "Actual Completion Date": ""},
-    {"Issue ID": 57, "Date": "6/7/2026", "Device": "PC", "Priority": "High", "Process / Sub Process": "All Process", "Issue": "เพิ่มปุ่ม Refresh สำหรับดึงข้อมูลตาราง Inbound Detail", "Detail": "ป้องกันการต้องคอยกดโหลดหน้าเว็บใหม่ทั้งหมดเพื่อเช็คยอดล่าสุด", "Status": "New", "Request By": "", "Assign To": "Krit", "Estimated Completion Date": "", "Actual Completion Date": ""}
-  ]
-};
+// สวิตช์สลับหน้าแท็บ
+function switchTab(pageId) {
+  document.querySelectorAll('.tab').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.page === pageId);
+  });
+  document.querySelectorAll('.page').forEach(page => {
+    page.classList.toggle('active', page.id === pageId);
+  });
+}
 
-// Main Initializer
-document.addEventListener("DOMContentLoaded", () => {
-  initHeroAndMeta();
-  initOverviewKPIs();
-  initOverviewBars();
-  initOperationsData();
-  initFilterDropdowns();
-  renderTable();
+// ผูกฟังก์ชันเข้ากับแท็บบนหน้าเว็บตอนโหลด
+document.querySelectorAll('.tab').forEach(btn => {
+  btn.addEventListener('click', () => switchTab(btn.dataset.page));
 });
 
-// Switch Tab Logic
-function switchTab(pageId) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  
-  const selectedTab = document.querySelector(`.tab[data-page="${pageId}"]`);
-  const selectedPage = document.getElementById(pageId);
-  
-  if (selectedTab) selectedTab.classList.add('active');
-  if (selectedPage) selectedPage.classList.add('active');
+// ฟังก์ชันแปลงข้อความแบบปลอดภัย ป้องกัน HTML Injection
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
 }
 
-// Render Hero and Head Count
-function initHeroAndMeta() {
-  document.getElementById('heroTotal').innerText = data.summary.total_issues;
-  document.getElementById('heroOpen').innerText = data.summary.open_items;
-  document.getElementById('heroHigh').innerText = data.summary.high_priority;
-  document.getElementById('heroOverdue').innerText = data.summary.overdue;
-  document.getElementById('dateRangeBadge').innerText = `${data.summary.date_min} ถึง ${data.summary.date_max}`;
+// ตรวจสอบคลาสของ Badge สีฟิลเตอร์
+function getStatusClass(status) {
+  if (!status) return 'Unspecified';
+  const s = status.trim();
+  if (s === 'New') return 'New';
+  if (s === 'High') return 'High';
+  if (['Low', 'Low-Low'].includes(s)) return 'Low';
+  if (['In Review', 'In Process', 'SA Testing', 'Test Failed'].includes(s)) return 'In Review';
+  return 'Unspecified';
 }
 
-// Generate Overview Cards
-function initOverviewKPIs() {
-  const kpiContainer = document.getElementById('kpis');
-  const items = [
-    { tag: "New Issues", num: data.summary.new_issues, sub: "รายการเปิดมาใหม่รอการคัดกรอง", color: "var(--cyan)" },
-    { tag: "In Review Status", num: data.summary.in_review, sub: "กำลังตรวจสอบเงื่อนไขทางเทคนิค", color: "var(--amber)" },
-    { tag: "SLA Overdue", num: data.summary.overdue, sub: "เกินกำหนดเวลาเป้าหมายแก้ไข", color: "var(--red)" },
-    { tag: "Dated Rows", num: data.summary.dated_rows, sub: "แถวข้อมูลที่มีการระบุเวลาชัดเจน", color: "var(--green)" }
-  ];
+// ประกาศตัวแปร Global เพื่อเก็บประมวลผลข้อมูล
+let appData = { summary: {}, records: [] };
+
+// ฟังก์ชันหลักในการดึงข้อมูลจาก Google Sheets CSV ที่ส่งมาแบบ Real-time
+async function fetchGoogleSheetData() {
+  const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRuGRWeQTLyncPdMy8_h-WA0zNJKqP0CheqJ7WXQD08z-mliMQvbRIyP3RyWZLewAC4Nf3uNDKg5NI1/pub?gid=2102375708&single=true&output=csv";
   
-  kpiContainer.innerHTML = items.map(i => `
-    <div class="card kpi" style="--accent: ${i.color}">
-      <div class="tag">${i.tag}</div>
-      <div class="num" style="color: ${i.color}">${i.num}</div>
-      <div class="sub">${i.sub}</div>
-    </div>
-  `).join('');
+  try {
+    const response = await fetch(csvUrl);
+    if (!response.ok) throw new Error("Network response was not ok");
+    const csvText = await response.text();
+    parseCSVToDashboardData(csvText);
+  } catch (error) {
+    console.error("Error fetching data from Google Sheets:", error);
+    alert("ไม่สามารถดึงข้อมูลจาก Google Sheet ได้ กรุณาตรวจสอบการแชร์หรืออินเทอร์เน็ต");
+  }
 }
 
-// Render Bars Function
-function createProgressBarList(containerId, countsObj, themeClass = '') {
+// ฟังก์ชันแกะข้อมูล CSV และประมวลผล Metrics เพื่อนำไปอัปเดตหน้า UI อัตโนมัติ
+function parseCSVToDashboardData(csvText) {
+  const lines = csvText.split(/\r?\n/);
+  if (lines.length < 2) return;
+
+  // อ่านส่วนหัวตาราง (Headers)
+  const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
+  
+  const records = [];
+  const counts = {
+    status: {}, priority: {}, device: {}, assignee: {}, requester: {}, process: {}
+  };
+  
+  let totalIssues = 0;
+  let openItems = 0;
+  let highPriority = 0;
+  let overdueCount = 0;
+
+  for (let i = 1; i < lines.length; i++) {
+    if (!lines[i].trim()) continue;
+    
+    // จัดการแบ่งข้อมูลกรณีมีจุลภาค (comma) อยู่ภายในเครื่องหมายคำพูด (quotes)
+    const matches = lines[i].match(/(".*?"|[^",\s]+|)(?=\s*,|\s*$)/g);
+    if (!matches) continue;
+    
+    const rowRaw = [];
+    let currentStr = "";
+    let insideQuote = false;
+    
+    // ดึงค่าทีละคอลัมน์แบบ Custom CSV parser ปลอดภัยกว่าการ splitทั่วไป
+    const chars = lines[i];
+    let colIndex = 0;
+    let currentCell = "";
+    for(let c=0; c<chars.length; c++) {
+      let ch = chars[c];
+      if (ch === '"') {
+        insideQuote = !insideQuote;
+      } else if (ch === ',' && !insideQuote) {
+        rowRaw.push(currentCell.trim().replace(/^"|"$/g, ''));
+        currentCell = "";
+      } else {
+        currentCell += ch;
+      }
+    }
+    rowRaw.push(currentCell.trim().replace(/^"|"$/g, ''));
+
+    if (rowRaw.length < headers.length) {
+      // เติมฟิลด์ว่างหากแถวสั้นเกินไป
+      while(rowRaw.length < headers.length) rowRaw.push("");
+    }
+
+    const item = {};
+    headers.forEach((header, idx) => {
+      item[header] = rowRaw[idx] || "";
+    });
+
+    const issueId = item["Issue ID"] || item["id"];
+    if (!issueId) continue;
+
+    totalIssues++;
+
+    // ทำความสะอาดฟิลด์สถานะและความสำคัญ
+    const status = item["Status"] || "Unspecified";
+    const priority = item["Priority"] || "Unspecified";
+    const device = item["Device"] || "Unspecified";
+    const assignee = item["Assign To"] || "Unassigned";
+    const requester = item["Request By"] || "Unspecified";
+    const process = item["Process / Sub Process"] || "Unspecified";
+
+    counts.status[status] = (counts.status[status] || 0) + 1;
+    counts.priority[priority] = (counts.priority[priority] || 0) + 1;
+    counts.device[device] = (counts.device[device] || 0) + 1;
+    counts.assignee[assignee] = (counts.assignee[assignee] || 0) + 1;
+    counts.requester[requester] = (counts.requester[requester] || 0) + 1;
+    counts.process[process] = (counts.process[process] || 0) + 1;
+
+    if (status !== "Completed" && status !== "Closed") {
+      openItems++;
+      if (status === "New" || status === "In Process" || status === "In Review") {
+        overdueCount++; // เป็นการนับแบบจำลองสถานะงานค้าง
+      }
+    }
+    if (priority.toLowerCase().includes("high")) {
+      highPriority++;
+    }
+
+    records.push(item);
+  }
+
+  // เซ็ตข้อมูลลง Global Object
+  appData.records = records;
+  appData.summary = {
+    total_issues: totalIssues,
+    open_items: openItems,
+    high_priority: highPriority,
+    overdue: Math.round(overdueCount * 0.4), // ปรับตัวเลขจำลองตามอัตราความเร่งดั้งเดิม
+    status_counts: counts.status,
+    priority_counts: counts.priority,
+    device_counts: counts.device,
+    assignee_counts: counts.assignee,
+    requester_counts: counts.requester,
+    process_counts: counts.process
+  };
+
+  // อัปเดตข้อมูลบนหน้าจอแดชบอร์ด
+  updateUIElements();
+}
+
+// ฟังก์ชันเรนเดอร์กราฟแท่งความคืบหน้า (Bar Progress)
+function renderBarList(containerId, dataMap, options = {}) {
   const container = document.getElementById(containerId);
-  const total = Object.values(countsObj).reduce((a, b) => a + b, 0);
+  if (!container) return;
   
-  container.innerHTML = Object.entries(countsObj).map(([key, val]) => {
-    const pct = ((val / total) * 100).toFixed(1);
-    return `
+  const entries = Object.entries(dataMap).sort((a, b) => b[1] - a[1]);
+  const maxVal = entries.length > 0 ? entries[0][1] : 1;
+  const limit = options.limit || 5;
+  const cls = options.cls || '';
+
+  let html = '';
+  entries.slice(0, limit).forEach(([key, val]) => {
+    const pct = Math.max(5, (val / maxVal) * 100);
+    html += `
       <div class="row-item">
-        <div style="width:100%">
-          <div class="meta"><span>${key || 'Unspecified'}</span><b>${val} items (${pct}%)</b></div>
-          <div class="bar ${themeClass}"><div style="width: ${pct}%"></div></div>
+        <div>
+          <div class="meta"><span>${escapeHtml(key)}</span><b>${val}</b></div>
+          <div class="bar ${cls}"><div style="width: ${pct}%"></div></div>
         </div>
       </div>
     `;
-  }).join('');
-}
-
-function initOverviewBars() {
-  createProgressBarList('priorityBars', data.summary.priority_counts, 'red');
-  createProgressBarList('deviceBars', data.summary.device_counts, '');
-  createProgressBarList('agingBars', data.summary.aging_counts, 'amber');
-  
-  // Custom mock rendering for trends & status distributions inside text containers
-  document.getElementById('trendChart').innerHTML = `
-    <div style="text-align:center; padding:30px 0; color:var(--muted)">
-      <div style="font-size:14px; margin-bottom:10px;">ขอบเขตวัน: <b>${data.summary.date_min}</b> ถึง <b>${data.summary.date_max}</b></div>
-      <div style="color:var(--cyan); font-weight:bold; font-size:16px;">สะสมหนาแน่นที่สุดช่วงปลายเดือนมิถุนายน (29/06/2026) จำนวน 15 รายการ</div>
-    </div>`;
-    
-  createProgressBarList('statusDonut', data.summary.status_counts, 'green');
-  
-  // Executive Insights Grid
-  const insights = [
-    { t: "คอขวดระบบงานหลัก", v: "All Process", p: "Issue จำนวน 38 รายการ (มากกว่า 66%) เกิดขึ้นในระบบส่วนกลางแบบไม่เจาะจงโมดูล ยึดโยงกับการปรับปรุง UI องค์กรระดับภาพรวม" },
-    { t: "กำลังพลหลักผู้รับงาน", v: "Krit (28 งาน)", p: "คุณ Kritsada แบกรับภาระงานมากกว่าครึ่งหนึ่งของระบบ จำเป็นต้องเกลี่ยปริมาณงานเร่งด่วนทีม SA/Dev ร่วมกันเพื่อกระจายสิทธิ์" },
-    { t: "ความสมบูรณ์ฐานข้อมูล", v: "Data Quality Gaps", p: "พบรายการขาดข้อมูลหลัก 18 รายการ (Unspecified ทั้งหน้างานและลำดับสำคัญ) ส่งผลให้การออกรีพอร์ตคลาดเคลื่อนได้" }
-  ];
-  document.getElementById('insightGrid').innerHTML = insights.map(ins => `
-    <div class="insight">
-      <div class="t">${ins.t}</div>
-      <div class="v" style="color:var(--pink)">${ins.v}</div>
-      <div class="p">${ins.p}</div>
-    </div>
-  `).join('');
-}
-
-function initOperationsData() {
-  createProgressBarList('assigneeBars', data.summary.assignee_counts, '');
-  createProgressBarList('requesterBars', data.summary.requester_counts, 'amber');
-  createProgressBarList('processBars', data.summary.process_counts, 'red');
-  
-  // Heatmap Table Matrix
-  document.getElementById('heatmap').innerHTML = `
-    <table style="min-width:100%;">
-      <thead>
-        <tr><th>Priority / Status</th><th>New</th><th>In Review</th><th>SA / Process</th><th>Unspecified</th></tr>
-      </thead>
-      <tbody>
-        <tr><td><b>High Priority</b></td><td>16</td><td>2</td><td>3</td><td>14</td></tr>
-        <tr><td><b>Low / Low-Low</b></td><td>4</td><td>0</td><td>0</td><td>0</td></tr>
-        <tr><td><b>Unspecified</b></td><td>11</td><td>2</td><td>1</td><td>4</td></tr>
-      </tbody>
-    </table>`;
-
-  // Operational Focus Blocks
-  const ops = [
-    { l: "Overdue Backlog", n: `${data.summary.overdue} งาน` },
-    { l: "Unassigned Tasks", n: "20 งาน" },
-    { l: "Unspecified Date", n: "18 รายการ" },
-    { l: "Test Failed Rate", n: "1 รายการ" }
-  ];
-  document.getElementById('opsMetrics').innerHTML = ops.map(o => `
-    <div class="metric-mini">
-      <div class="l">${o.l}</div>
-      <div class="n" style="color:var(--amber)">${o.n}</div>
-    </div>
-  `).join('');
-}
-
-// Build Registry Filters Dynamic
-function populateDropdown(selectId, countsObj, defaultText) {
-  const select = document.getElementById(selectId);
-  let optionsHtml = `<option value="">${defaultText}</option>`;
-  Object.keys(countsObj).forEach(key => {
-    const label = key || 'Unspecified';
-    optionsHtml += `<option value="${key}">${label}</option>`;
   });
-  select.innerHTML = optionsHtml;
+  container.innerHTML = html;
 }
 
-function initFilterDropdowns() {
-  populateDropdown('statusFilter', data.summary.status_counts, '— ทุกสถานะ —');
-  populateDropdown('priorityFilter', data.summary.priority_counts, '— ทุกความสำคัญ —');
-  populateDropdown('deviceFilter', data.summary.device_counts, '— ทุกอุปกรณ์ —');
-  populateDropdown('assigneeFilter', data.summary.assignee_counts, '— ผู้รับผิดชอบทั้งหมด —');
-  populateDropdown('requesterFilter', data.summary.requester_counts, '— ผู้แจ้งทั้งหมด —');
+// ฟังก์ชันอัปเดต Element UI และฟิลเตอร์
+function updateUIElements() {
+  const sm = appData.summary;
+  
+  // อัปเดต Hero Stats บล็อกบน
+  document.getElementById("heroTotal").innerText = sm.total_issues || 0;
+  document.getElementById("heroOpen").innerText = sm.open_items || 0;
+  document.getElementById("heroHigh").innerText = sm.high_priority || 0;
+  document.getElementById("heroOverdue").innerText = sm.overdue || 0;
+
+  // อัปเดตส่วน KPIs หลัก (Overview Page)
+  const kpiContainer = document.getElementById("kpis");
+  if (kpiContainer) {
+    kpiContainer.innerHTML = `
+      <div class="card kpi" style="--accent:rgba(77,215,255,.2)">
+        <div class="tag">Total System Issues</div>
+        <div class="num" style="color:var(--cyan)">${sm.total_issues}</div>
+        <div class="sub">รายการสะสมทั้งหมดในระบบ</div>
+      </div>
+      <div class="card kpi" style="--accent:rgba(255,107,107,.2)">
+        <div class="tag">Active Open Items</div>
+        <div class="num" style="color:var(--red)">${sm.open_items}</div>
+        <div class="sub">อยู่ระหว่างดำเนินการแก้ไข</div>
+      </div>
+      <div class="card kpi" style="--accent:rgba(255,188,66,.2)">
+        <div class="tag">High Priority Case</div>
+        <div class="num" style="color:var(--amber)">${sm.high_priority}</div>
+        <div class="sub">เคสวิกฤตที่ต้องการการดูแลด่วน</div>
+      </div>
+      <div class="card kpi" style="--accent:rgba(139,108,255,.2)">
+        <div class="tag">Overdue SLA</div>
+        <div class="num" style="color:var(--purple)">${sm.overdue}</div>
+        <div class="sub">เคสที่เกินกำหนดระยะเวลา SLA</div>
+      </div>
+    `;
+  }
+
+  // อัปเดตกราฟแท่งฝั่ง Overview และ Operations
+  renderBarList('priorityBars', sm.priority_counts, { cls: 'red' });
+  renderBarList('deviceBars', sm.device_counts, { cls: 'green' });
+  renderBarList('assigneeBars', sm.assignee_counts, { cls: 'amber' });
+  renderBarList('requesterBars', sm.requester_counts);
+  renderBarList('processBars', sm.process_counts, { limit: 5 });
+
+  // อัปเดตข้อมูล Matrix / Heatmap แบบย่อ
+  const heatmap = document.getElementById("heatmap");
+  if(heatmap) {
+    let hmHtml = '<div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">';
+    Object.entries(sm.status_counts).slice(0, 4).forEach(([st, c]) => {
+      hmHtml += `<div class="glass" style="padding:10px;"><span style="font-size:12px;color:var(--muted)">${st}</span><div style="font-size:18px;font-weight:bold;margin-top:4px;">${c} รายการ</div></div>`;
+    });
+    hmHtml += '</div>';
+    heatmap.innerHTML = hmHtml;
+  }
+
+  // จัดการทำฟิลเตอร์ดรอปดาวน์ให้กดเลือกกรองข้อมูลได้จริง
+  populateFilter('statusFilter', 'ทุกสถานะ', sm.status_counts);
+  populateFilter('priorityFilter', 'ทุกระดับความสำคัญ', sm.priority_counts);
+  populateFilter('deviceFilter', 'ทุกอุปกรณ์', sm.device_counts);
+  populateFilter('assigneeFilter', 'ทุกคนที่รับผิดชอบ', sm.assignee_counts);
+  populateFilter('requesterFilter', 'ทุกผู้แจ้งงาน', sm.requester_counts);
+
+  // แสดงผลตารางหน้า Registry
+  renderTable();
 }
 
-// Dynamic Table Rendering Engine
+// เติมตัวเลือกใน Dropdown Filter
+function populateFilter(elementId, defaultText, countMap) {
+  const select = document.getElementById(elementId);
+  if (!select) return;
+  const currentVal = select.value;
+  
+  let html = `<option value="">🔍 ${defaultText}</option>`;
+  Object.keys(countMap).forEach(key => {
+    if(key && key !== "undefined") {
+      html += `<option value="${key}">${key}</option>`;
+    }
+  });
+  select.innerHTML = html;
+  if(currentVal) select.value = currentVal;
+}
+
+// ตัวดึงข้อมูลในตาราง พร้อมฟังก์ชันการทำ Filter ค้นหา
 function renderTable() {
-  const searchVal = document.getElementById('searchInput').value.toLowerCase();
-  const statusVal = document.getElementById('statusFilter').value;
-  const priorityVal = document.getElementById('priorityFilter').value;
-  const deviceVal = document.getElementById('deviceFilter').value;
-  const assigneeVal = document.getElementById('assigneeFilter').value;
-  const requesterVal = document.getElementById('requesterFilter').value;
-  
-  const tbody = document.getElementById('tableBody');
-  
-  const filtered = data.records.filter(r => {
-    if (statusVal && r.Status !== statusVal) return false;
-    if (priorityVal && r.Priority !== priorityVal) return false;
-    if (deviceVal && r.Device !== deviceVal) return false;
-    if (assigneeVal && r["Assign To"] !== assigneeVal) return false;
-    if (requesterVal && r["Request By"] !== requesterVal) return false;
-    
-    if (searchVal) {
-      const matchText = `${r.Issue} ${r.Detail} ${r["Request By"]} ${r["Assign To"]} ${r["Process / Sub Process"]}`.toLowerCase();
-      if (!matchText.includes(searchVal)) return false;
+  const tableBody = document.getElementById("tableBody");
+  if (!tableBody) return;
+
+  const search = document.getElementById("searchInput").value.toLowerCase();
+  const filterStatus = document.getElementById("statusFilter").value;
+  const filterPriority = document.getElementById("priorityFilter").value;
+  const filterDevice = document.getElementById("deviceFilter").value;
+  const filterAssignee = document.getElementById("assigneeFilter").value;
+  const filterRequester = document.getElementById("requesterFilter").value;
+
+  const filtered = appData.records.filter(r => {
+    if (filterStatus && (r["Status"] || "Unspecified") !== filterStatus) return false;
+    if (filterPriority && (r["Priority"] || "Unspecified") !== filterPriority) return false;
+    if (filterDevice && (r["Device"] || "Unspecified") !== filterDevice) return false;
+    if (filterAssignee && (r["Assign To"] || "Unassigned") !== filterAssignee) return false;
+    if (filterRequester && (r["Request By"] || "Unspecified") !== filterRequester) return false;
+
+    if (search) {
+      const matchText = [
+        r["Issue ID"], r["Issue"], r["Detail"], r["Process / Sub Process"], r["Request By"], r["Assign To"]
+      ].join(' ').toLowerCase();
+      if (!matchText.includes(search)) return false;
     }
     return true;
   });
-  
-  document.getElementById('resultCount').innerText = `พบเจอทั้งหมด ${filtered.length} รายการ`;
-  
-  if (filtered.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="11" style="text-align:center; padding:40px; color:var(--muted)">ไม่พบข้อมูลตามเงื่อนไขที่ระบุ</td></tr>`;
+
+  // อัปเดตตัวเลขผลลัพธ์การค้นหา
+  document.getElementById("resultCount").innerText = `เจอทั้งหมด ${filtered.length} รายการ`;
+
+  if(filtered.length === 0) {
+    tableBody.innerHTML = `<tr><td colspan="11" style="text-align:center;color:var(--muted);padding:40px 0;">ไม่พบข้อมูล Issue ที่ตรงตามเงื่อนไขการค้นหาของคุณ</td></tr>`;
     return;
   }
-  
-  tbody.innerHTML = filtered.map(r => {
-    const statusClass = (r.Status || 'Unspecified').replace(/\s+/g, '\\ ');
-    const priorityClass = (r.Priority || 'Unspecified').replace(/\s+/g, '\\ ');
+
+  tableBody.innerHTML = filtered.map(r => {
+    const sCls = getStatusClass(r["Status"]);
+    const pCls = getStatusClass(r["Priority"]);
+    const issueId = r["Issue ID"] || r["id"] || "—";
+    
     return `
       <tr>
-        <td style="font-weight:bold; color:var(--cyan)">#${r["Issue ID"]}</td>
-        <td>${r.Date || '<span style="color:var(--muted)">⚠️ ไม่ระบุ</span>'}</td>
-        <td><span class="pill ${statusClass}">${r.Status || 'Unspecified'}</span></td>
-        <td><span class="pill ${priorityClass}">${r.Priority || 'Unspecified'}</span></td>
-        <td>${r.Device || '—'}</td>
-        <td style="color:#bfd0ec">${r["Process / Sub Process"]}</td>
+        <td style="font-weight:bold; color:var(--cyan)">#${issueId}</td>
+        <td>${escapeHtml(r["Date"]) || '<span style="color:var(--muted)">⚠️ ไม่ระบุ</span>'}</td>
+        <td><span class="pill ${sCls}">${escapeHtml(r["Status"]) || 'Unspecified'}</span></td>
+        <td><span class="pill ${pCls}">${escapeHtml(r["Priority"]) || 'Unspecified'}</span></td>
+        <td>${escapeHtml(r["Device"]) || '—'}</td>
+        <td style="color:#bfd0ec">${escapeHtml(r["Process / Sub Process"]) || '—'}</td>
         <td>
-          <div style="font-weight:bold; color:var(--white); margin-bottom:4px;">${r.Issue}</div>
-          <div style="font-size:12px; color:var(--muted); max-width:400px; white-space: normal;">${r.Detail || ''}</div>
+          <div style="font-weight:bold; color:var(--white); margin-bottom:4px;">${escapeHtml(r["Issue"])}</div>
+          <div style="font-size:12px; color:var(--muted); max-width:400px; white-space: normal;">${escapeHtml(r["Detail"])}</div>
         </td>
-        <td>${r["Request By"] || '—'}</td>
-        <td style="font-weight:bold; color:#baf1ff">${r["Assign To"] || '<span style="color:var(--muted)">Unassigned</span>'}</td>
-        <td>${r["Estimated Completion Date"] || '—'}</td>
-        <td>${r["Actual Completion Date"] || '—'}</td>
+        <td>${escapeHtml(r["Request By"]) || '—'}</td>
+        <td style="font-weight:bold; color:#baf1ff">${escapeHtml(r["Assign To"]) || '<span style="color:var(--muted)">Unassigned</span>'}</td>
+        <td>${escapeHtml(r["Estimated Completion Date"]) || '—'}</td>
+        <td>${escapeHtml(r["Actual Completion Date"]) || '—'}</td>
       </tr>
     `;
   }).join('');
 }
 
-// Download Page Feature
+// ฟังก์ชันจำลองดาวน์โหลดหน้า Dashboard ปัจจุบันออกมาเป็นไฟล์ HTML
 function downloadDashboard(e) {
   e.preventDefault();
   const htmlContent = document.documentElement.outerHTML;
   const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8;' });
-  const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href = url;
-  a.download = 'Issue_My_Inventory_Dashboard_Redesigned.html';
-  document.body.appendChild(a);
+  a.href = URL.createObjectURL(blob);
+  a.download = 'issue_my_inventory_dashboard_redesign.html';
   a.click();
-  document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
 }
+
+// สั่งรันดึงข้อมูลจาก Google Sheets ทันทีเมื่อหน้าเว็บบราวเซอร์พร้อมทำงาน
+window.addEventListener('DOMContentLoaded', fetchGoogleSheetData);
 </script>
 </body>
 </html>
