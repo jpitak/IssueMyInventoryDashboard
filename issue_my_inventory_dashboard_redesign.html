@@ -456,17 +456,45 @@ function tabs(){
     document.getElementById(btn.dataset.page).classList.add('active');
   }));
 }
+// ฟังก์ชันซิงค์ข้อมูลสดจากลิงก์ Google Sheet ล่าสุดของพี่พิทักษ์ (ใช้แทนค่า url ตัวเก่าทั้งหมด)
+async function initCoreDatabaseDashboard() {
+  const url = "https://docs.google.com/spreadsheets/d/1_pgCOURh8CuwLCExSf7XfneTMep8yfD8qjKxPvBwIVA/export?format=csv&gid=0&_t=" + new Date().getTime();
+  
+  try {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error("Cloud database connection failed");
+    const rawCSV = await response.text();
+    
+    // บล็อกประมวลผลข้อมูลชีต
+    const tokenizedLines = parseAdvancedCSV(rawCSV);
+    if (tokenizedLines.length === 0) return;
+    
+    const columnsHeader = tokenizedLines[0].map(h => h.trim().replace(/^"|"$/g, ''));
+    const parsedRecords = [];
+    
+    // (ระบบจะดึงหัวข้อจากชีตมาวิ่งลูปให้อัตโนมัติ)
+    for (let i = 1; i < tokenizedLines.length; i++) {
+      const lineCells = tokenizedLines[i];
+      if (lineCells.length === 0 || (lineCells.length === 1 && lineCells[0] === "")) continue;
+      
+      const entity = {};
+      columnsHeader.forEach((headTitle, index) => {
+        let cellVal = lineCells[index] !== undefined ? lineCells[index].trim() : "";
+        entity[headTitle] = cellVal.replace(/^"|"$/g, '').trim();
+      });
+      
+      if (!entity["Issue ID"] && !entity["Issue"]) continue;
+      parsedRecords.push(entity);
+    }
+    
+    cloudSourceData = parsedRecords;
+    runFilteringEngine(); // สั่งอัปเดตตารางหน้าระบบทันที
+    
+  } catch (err) {
+    console.error("Fetch data error:", err);
+  }
+}
 
-function downloadSelf(){
-  document.getElementById('downloadHtmlBtn').addEventListener('click', (e)=>{
-    e.preventDefault();
-    const blob = new Blob([document.documentElement.outerHTML], {type:'text/html;charset=utf-8'});
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'issue_my_inventory_dashboard_redesign.html';
-    a.click();
-    URL.revokeObjectURL(a.href);
-  });
 }
 
 mountKPIs();
