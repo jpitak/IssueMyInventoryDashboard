@@ -469,17 +469,7 @@ function downloadSelf(){
   });
 }
 <script>
-// ... โค้ดส่วนอื่น ๆ ...
 
-async function initCoreDatabaseDashboard() {
-  // บรรทัดนี้แหละครับที่ให้พี่พิทักษ์นำลิงก์ล่าสุดไปวางแทนที่ตัวเดิม
-  const url = "https://docs.google.com/spreadsheets/d/1_pgCOURh8CuwLCExSf7XfneTMep8yfD8qjKxPvBwIVA/export?format=csv&gid=0&_t=" + new Date().getTime();
-  
-  try {
-    const response = await fetch(url);
-    if(!response.ok) throw new Error("Network error");
-    // ... โค้ดประมวลผลดึงค่าตารางด้านล่าง ...
-  
   
 mountKPIs();
 donut('statusDonut', statusMap);
