@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Issue My Inventory Dashboard — Live Redesign v3</title>
+<title>Issue My Inventory Dashboard — Live Engine Redesign v3</title>
 <style>
 :root{
   --bg:#081122;
@@ -27,29 +27,29 @@
 *{box-sizing:border-box}
 html,body{margin:0;padding:0;background:radial-gradient(circle at top left,#13274f 0%,#091121 42%,#060b16 100%);color:var(--text);font-family:Inter,Segoe UI,system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased}
 
-/* Layout Structural (คืนรูปโฉมตามภาพ 2,3,4,5,6) */
+/* Layout Structural Control */
 .app-layout{display:flex;min-height:100vh}
 .sidebar{width:280px;background:rgba(14,24,48,0.4);border-right:1px solid var(--line);padding:30px 20px;display:flex;flex-direction:column;gap:30px;backdrop-filter:blur(20px)}
 .main-content{flex:1;padding:30px 40px;overflow-x:hidden}
 
-/* Identity Branding */
+/* Brand Logo Layout */
 .brand{display:flex;align-items:center;gap:12px}
 .brand-logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--cyan),var(--blue));box-shadow:0 0 20px rgba(77,215,255,0.4)}
 .brand-name{font-size:18px;font-weight:800;letter-spacing:-.02em;background:linear-gradient(90deg,var(--white),var(--muted));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 
-/* Nav Menu Sidebar */
+/* Nav Menu Tabs */
 .nav-menu{display:flex;flex-direction:column;gap:8px}
 .nav-item{display:flex;align-items:center;gap:12px;padding:14px 18px;border-radius:14px;color:var(--muted);text-decoration:none;font-size:14px;font-weight:600;transition:all .2s;background:transparent;border:none;width:100%;text-align:left;cursor:pointer}
 .nav-item:hover{color:var(--text);background:rgba(255,255,255,0.03)}
 .nav-item.active{background:rgba(77,215,255,0.1);color:var(--cyan);border:1px solid rgba(77,215,255,0.15)}
 
-/* Top Navbar Info */
+/* Top Navbar Context */
 .top-navbar{display:flex;justify-content:between;align-items:center;margin-bottom:35px;background:rgba(17,29,57,0.3);border:1px solid var(--line);padding:18px 28px;border-radius:18px;backdrop-filter:blur(10px)}
 .top-title h1{margin:0;font-size:24px;font-weight:800;letter-spacing:-.02em}
 .top-title p{margin:4px 0 0;font-size:12px;color:var(--muted)}
 .sync-badge{display:flex;align-items:center;gap:8px;padding:8px 16px;border-radius:10px;font-size:12px;font-weight:600;background:rgba(55,211,154,0.08);border:1px solid rgba(55,211,154,0.15);color:#a1ffd0}
 
-/* KPI Blocks Style */
+/* Grid & Cards (คงโครงสร้างเดิมเป๊ะๆ) */
 .kpi-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:18px;margin-bottom:30px}
 .kpi-card{background:linear-gradient(180deg,#12203f,#0a1224);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);position:relative;overflow:hidden}
 .kpi-card::after{content:'';position:absolute;top:0;left:0;width:100%;height:3px}
@@ -63,7 +63,6 @@ html,body{margin:0;padding:0;background:radial-gradient(circle at top left,#1327
 .kpi-value{font-size:32px;font-weight:800;margin:10px 0 4px;letter-spacing:-.02em}
 .kpi-desc{font-size:12px;color:rgba(238,244,255,0.4)}
 
-/* Main Panels Structural Grid */
 .grid-main{display:grid;grid-template-columns:1.4fr 1fr;gap:25px;margin-bottom:25px}
 .grid-sub{display:grid;grid-template-columns:repeat(3,1fr);gap:25px;margin-bottom:25px}
 .panel{background:linear-gradient(180deg,#111d39,#0a1224);border:1px solid var(--line);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow)}
@@ -71,7 +70,7 @@ html,body{margin:0;padding:0;background:radial-gradient(circle at top left,#1327
 .panel-title{font-size:16px;font-weight:700;margin:0 0 4px;color:var(--white)}
 .panel-desc{font-size:12px;color:var(--muted);margin:0}
 
-/* Charts Elements */
+/* Chart Donuts Elements */
 .donut-box{width:170px;height:170px;margin:20px auto;position:relative;display:flex;align-items:center;justify-content:center}
 .donut-svg{transform:rotate(-90deg);width:100%;height:100%}
 .donut-center{position:absolute;text-align:center}
@@ -82,7 +81,7 @@ html,body{margin:0;padding:0;background:radial-gradient(circle at top left,#1327
 .chart-line-svg{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none}
 .axis-lbl{font-size:10px;color:var(--muted);position:absolute;bottom:-20px}
 
-/* Progress Lists Custom (สำหรับแก้ Developer Workload หาย) */
+/* Progress Stat Bars Container */
 .bar-stack{display:flex;flex-direction:column;gap:15px}
 .bar-item{display:grid;grid-template-columns:1fr;gap:5px}
 .bar-meta{display:flex;justify-content:space-between;font-size:12.5px}
@@ -94,19 +93,19 @@ html,body{margin:0;padding:0;background:radial-gradient(circle at top left,#1327
 .bar-item.green .bar-run{background:linear-gradient(90deg,var(--green),#a1ffd0)}
 .bar-item.amber .bar-run{background:linear-gradient(90deg,var(--amber),#ffe3b3)}
 
-/* Interactive Searching UI */
+/* Search Row */
 .filter-row{display:grid;grid-template-columns:2fr repeat(5,1fr);gap:12px;margin-bottom:22px}
-input,select{width:100%;padding:12px 16px;background:#060c18;border:1px solid rgba(255,255,255,.1);color:#fff;border-radius:12px;font-size:12.5px;outline:none;transition:border .2s}
+input,select{width:100%;padding:12px 16px;background:#060c18;border:1px solid rgba(255,255,255,.1);color:#fff;border-radius:12px;font-size:12.5px;outline:none}
 input:focus,select:focus{border-color:var(--cyan)}
 
-/* Issues Registry Table */
+/* Registry Data Table Layout */
 .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:16px;background:#070e1c;box-shadow:var(--shadow)}
 table{width:100%;border-collapse:collapse;font-size:13px;min-width:1500px}
 th,td{padding:15px 14px;border-bottom:1px solid rgba(255,255,255,.03);text-align:left;vertical-align:top}
 th{background:#0d182e;color:var(--muted);font-weight:600;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;position:sticky;top:0;z-index:10}
 tr:hover td{background:rgba(255,255,255,.01)}
 
-/* Badges Pillar */
+/* Custom Badges */
 .pill{display:inline-flex;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;white-space:nowrap}
 .pill.New{background:rgba(77,215,255,.14);color:#a6ebff}
 .pill.In-Process{background:rgba(255,188,66,.14);color:#ffe1ae}
@@ -140,19 +139,19 @@ tr:hover td{background:rgba(255,255,255,.01)}
     <header class="top-navbar">
       <div class="top-title">
         <h1>Issue Performance Core Dashboard</h1>
-        <p>ระบบประมวลผลวิเคราะห์ข้อมูลสดจับคู่คอลลัมน์ Google Sheet ล่าสุดอัตโนมัติ</p>
+        <p>ระบบวิเคราะห์ข้อมูลเชื่อมต่อ Google Sheet ล่าสุด (ตรวจสอบฟิลด์ประมวลผลจับคู่ตรงคอลลัมน์)</p>
       </div>
       <div class="sync-badge" id="syncNotify">
-        🔄 กำลังซิงค์ข้อมูลจากกูเกิลชีตคลังหลัก...
+        🔄 กำลังซิงค์ข้อมูลจากคลังกลาง Google Sheets...
       </div>
     </header>
 
     <main class="page active" id="overview">
       <div class="kpi-grid">
-        <div class="kpi-card blue"><div class="kpi-title">Total Issues</div><div class="kpi-value" id="kpiTotal">—</div><div class="kpi-desc">เคสสะสมในชีตทั้งหมด</div></div>
+        <div class="kpi-card blue"><div class="kpi-title">Total Issues</div><div class="kpi-value" id="kpiTotal">—</div><div class="kpi-desc">เคสสะสมในระบบทั้งหมด</div></div>
         <div class="kpi-card cyan"><div class="kpi-title">Open Items</div><div class="kpi-value" id="kpiOpen">—</div><div class="kpi-desc">อยู่ระหว่างดำเนินการ</div></div>
         <div class="kpi-card red"><div class="kpi-title">High Priority</div><div class="kpi-value" id="kpiHigh">—</div><div class="kpi-desc">เคสเร่งด่วนขั้นวิกฤต</div></div>
-        <div class="kpi-card green"><div class="kpi-title">Completed / Closed</div><div class="kpi-value" id="kpiClosed">—</div><div class="kpi-desc">แก้ไขเสร็จสมบูรณ์แล้ว</div></div>
+        <div class="kpi-card green"><div class="kpi-title">Completed / Closed</div><div class="kpi-value" id="kpiClosed">—</div><div class="kpi-desc">แก้ไขเสร็จเรียบร้อยแล้ว</div></div>
         <div class="kpi-card amber"><div class="kpi-title">Missing Date</div><div class="kpi-value" id="kpiMissing">—</div><div class="kpi-desc">รายการไม่ลงวันที่ตรวจพบ</div></div>
         <div class="kpi-card pink"><div class="kpi-title">Unassigned</div><div class="kpi-value" id="kpiUnassigned">—</div><div class="kpi-desc">ยังไม่มีผู้รับผิดชอบดูแล</div></div>
       </div>
@@ -187,7 +186,7 @@ tr:hover td{background:rgba(255,255,255,.01)}
 
     <main class="page" id="operations">
       <div class="grid-sub">
-        <div class="panel"><div class="panel-head"><h3 class="panel-title">Assign To Developer Workload</h3><p class="panel-desc">รายชื่อทีมพัฒนาผู้รับผิดชอบเคสปัจจุบัน</p></div><div id="devWorkloadList" class="bar-stack"></div></div>
+        <div class="panel"><div class="panel-head"><h3 class="panel-title">Assign To Developer Workload</h3><p class="panel-desc">รายชื่อทีมพัฒนาผู้รับผิดชอบงานปัจจุบัน</p></div><div id="devWorkloadList" class="bar-stack"></div></div>
         <div class="panel"><div class="panel-head"><h3 class="panel-title">Process Component Count</h3><p class="panel-desc">ปริมาณแยกตามโครงสร้างโมดูลหลัก</p></div><div id="processModuleList" class="bar-stack"></div></div>
         <div class="panel">
           <div class="panel-head"><h3 class="panel-title">Data Warning Flags</h3><p class="panel-desc">ดักจับจุดความสมบูรณ์ฟิลด์ข้อมูลกูเกิลชีต</p></div>
@@ -208,8 +207,8 @@ tr:hover td{background:rgba(255,255,255,.01)}
     <main class="page" id="registry">
       <div class="panel">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px;">
-          <div><h3 class="panel-title">Issue Registry Records</h3><p class="panel-desc">รายการสรุปแถวบันทึกปัญหาทั้งหมด ค้นหาตัวกรองสมบูรณ์แบบ</p></div>
-          <div id="counterRows" style="background:rgba(77,215,255,0.1); color:var(--cyan); padding:8px 16px; border-radius:10px; font-weight:700; font-size:12px;">กำลังคิวรี...</div>
+          <div><h3 class="panel-title">Issue Registry Records</h3><p class="panel-desc">รายการสรุปแถวบันทึกปัญหาทั้งหมด พร้อมฟังก์ชันค้นหาเสร็จสรรพ</p></div>
+          <div id="counterRows" style="background:rgba(77,215,255,0.1); color:var(--cyan); padding:8px 16px; border-radius:10px; font-weight:700; font-size:12px;">กำลังประมวลผล...</div>
         </div>
 
         <div class="filter-row">
@@ -239,7 +238,7 @@ tr:hover td{background:rgba(255,255,255,.01)}
               </tr>
             </thead>
             <tbody id="gridTableBody">
-              <tr><td colspan="11" style="text-align:center; padding:40px; color:var(--muted);">กำลังประมวลผลดึงโครงสร้างตารางข้อมูลตรง...</td></tr>
+              <tr><td colspan="11" style="text-align:center; padding:40px; color:var(--muted);">กำลังโหลดโครงสร้างตารางข้อมูลตรง...</td></tr>
             </tbody>
           </table>
         </div>
@@ -247,7 +246,7 @@ tr:hover td{background:rgba(255,255,255,.01)}
     </main>
 
     <footer class="footer-text">
-      OGA International Project Base Architecture • System Analysed Live UI v3.0
+      OGA International Project Base Architecture • Redesign Live UI v3.0
     </footer>
   </div>
 </div>
@@ -277,7 +276,7 @@ function getPillClass(val){
   return 'Unspecified';
 }
 
-// แตกสตริง CSV ชั้นสูงเพื่อป้องกันปัญหาข้อความที่เคสมีเครื่องหมายคอมมาหรือเคาะเว้นวรรคบรรทัดเลื่อนคอลลัมน์
+// ฟังก์ชันแยกไฟล์ CSV ชั้นสูง (ป้องกันปัญหาเครื่องหมายคอมมาในฟิลด์หรือการเคาะบรรทัดเลื่อนคอลลัมน์)
 function parseAdvancedCSV(text) {
   let lines = []; let row = [""]; let insideQuote = false;
   for (let i = 0; i < text.length; i++) {
@@ -298,8 +297,9 @@ function parseAdvancedCSV(text) {
   return lines;
 }
 
-// ฟังก์ชันหลักดึงโครงข้อมูลดิบและทำการคำนวณ Map ตัวแปรใหม่ทั้งหมดแบบตัดแคชสอดคล้องภาพ 2,3,4,5,6
+// แกนหลักในการซิงค์ เชื่อมต่อดึงไฟล์ CSV สดโดยตรง (ตัดแคชด้วย Timestamp)
 async function initCoreDatabaseDashboard(){
+  // ดึงค่า CSV ตรงจากพับลิชลิงก์แผ่นงานของพี่พิทักษ์
   const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRuGRWeQTLyncPdMy8_h-WA0zNJKqP0CheqJ7WXQD08z-mliMQvbRIyP3RyWZLewAC4Nf3uNDKg5NI1/pub?gid=2102375708&single=true&output=csv&_t=" + new Date().getTime();
   
   try {
@@ -310,18 +310,14 @@ async function initCoreDatabaseDashboard(){
     const tokenizedLines = parseAdvancedCSV(rawCSV);
     if(tokenizedLines.length === 0) return;
 
-    // ช้อนเอาคอลลัมน์ดิบหัวแถวที่แท้จริงจาก Google Sheet มาใช้งานโดยตรง
+    // ช้อนเอาหัวแถวหลัก (Header Columns) ที่แท้จริงจากกูเกิลชีต
     const columnsHeader = tokenizedLines[0].map(h => h.trim().replace(/^"|"$/g, ''));
     
     const parsedRecords = [];
     const stats = { status:{}, priority:{}, device:{}, developer:{}, requester:{}, process:{}, timeline:{} };
     
-    let activeOpenCount = 0;
-    let highPrioCount = 0;
-    let doneClosedCount = 0;
-    let blankDateCount = 0;
-    let noDevCount = 0;
-    let blankActualDateCount = 0;
+    let activeOpenCount = 0; let highPrioCount = 0; let doneClosedCount = 0;
+    let blankDateCount = 0; let noDevCount = 0; let blankActualDateCount = 0;
 
     for (let i = 1; i < tokenizedLines.length; i++) {
       const lineCells = tokenizedLines[i];
@@ -333,14 +329,15 @@ async function initCoreDatabaseDashboard(){
         entity[headTitle] = cellVal.replace(/^"|"$/g, '').trim();
       });
 
-      // ดักตรวจแถวขยะว่างเปล่าบนแผ่นชีต ถ้าไม่มีค่า ID และหัวข้อหลัก ให้ปัดตกแถวนั้นไปทันที
+      // ปัดตกแถวกรณีที่เป็นข้อมูลเปล่าท้ายแผ่นงานชีต
       if (!entity["Issue ID"] && !entity["Issue"]) continue;
 
-      // ดึงค่าอิงตามคอลลัมน์แท้ในชีตพี่พิทักษ์ (ไม่มีตัวแปรแอบแฝง _norm)
       const st = entity["Status"] || "Unspecified";
       const pr = entity["Priority"] || "Unspecified";
       const dv = entity["Device"] || "Unspecified";
-      const dev = entity["Assign To"] || "Unassigned"; // ดึงข้อมูลผู้พัฒนาตรงช่องนี้แน่นอนครับ!
+      
+      // ✨ จุดสำคัญ: ผูกคีย์ผู้พัฒนาเข้ากับหัวข้อคอลลัมน์ "Assign To" ตรงๆ เพื่อป้องกันรายชื่อเพี้ยนหรือสลับคอลลัมน์
+      const dev = entity["Assign To"] || "Unassigned"; 
       const req = entity["Request By"] || "Unspecified";
       const proc = entity["Process / Sub Process"] || "Unspecified";
       const dt = entity["Date"] || "";
@@ -348,7 +345,7 @@ async function initCoreDatabaseDashboard(){
       stats.status[st] = (stats.status[st] || 0) + 1;
       stats.priority[pr] = (stats.priority[pr] || 0) + 1;
       stats.device[dv] = (stats.device[dv] || 0) + 1;
-      stats.developer[dev] = (stats.developer[dev] || 0) + 1;
+      stats.developer[dev] = (stats.developer[dev] || 0) + 1; // เพิ่มความถี่ให้ชื่อผู้พัฒนาที่ถูกต้อง
       stats.requester[req] = (stats.requester[req] || 0) + 1;
       stats.process[proc] = (stats.process[proc] || 0) + 1;
 
@@ -371,7 +368,7 @@ async function initCoreDatabaseDashboard(){
 
     cloudSourceData = parsedRecords;
 
-    // ส่งชุดเลขสรุปขึ้นหน้าจอกล่องการ์ด KPI ด้านบนสุด (สไตล์รูปภาพ 2,3)
+    // แสดงตัวเลขขึ้นหน้ากล่องการ์ด KPI ด้านบนสุด 
     document.getElementById("kpiTotal").innerText = cloudSourceData.length;
     document.getElementById("kpiOpen").innerText = activeOpenCount;
     document.getElementById("kpiHigh").innerText = highPrioCount;
@@ -383,25 +380,25 @@ async function initCoreDatabaseDashboard(){
     document.getElementById("opsMissingActualDate").innerText = blankActualDateCount;
     document.getElementById("opsUnassignedCount").innerText = noDevCount;
 
-    // เรียกฟังก์ชันวาดกราฟเส้นและวงล้อสัดส่วนตามสัดส่วนจริง
+    // เรียกฟังก์ชันวาดโครงสร้างกราฟ
     drawDonutChart(stats.status, cloudSourceData.length);
     drawTimelineTrendSVG(stats.timeline);
 
-    // ผลักชุดความถี่สถิติลงคอมโพเนนต์ Progress Bar (ตรงตามดีไซน์ Glassmorphism รูปภาพ 2,3,4)
+    // เรนเดอร์แท่งสถิติ Progress Bar (ข้อมูล Developer Workload จะแสดงผลถูกต้องครบถ้วนแล้วครับ)
     pushProgressBarsUI('prioList', stats.priority, 'red');
     pushProgressBarsUI('deviceList', stats.device, 'green');
     pushProgressBarsUI('reqList', stats.requester, 'default');
-    pushProgressBarsUI('devWorkloadList', stats.developer, 'default'); // แสดงชื่อผู้พัฒนาตรงและครบถ้วนตามภาพ 1 แล้วครับ!
+    pushProgressBarsUI('devWorkloadList', stats.developer, 'default'); // จุดที่ผู้พัฒนาขึ้นตรงตามภาพ 1
     pushProgressBarsUI('processModuleList', stats.process, 'amber', 6);
 
-    // สรรสร้างตัวเลือกในเมนูดร็อปดาวน์ตามกูเกิลชีตล่าสุดอัตโนมัติ
+    // สรรสร้างตัวเลือกในเมนูดร็อปดาวน์ค้นหาอัตโนมัติ
     createSelectorItems('selStatus', stats.status);
     createSelectorItems('selPriority', stats.priority);
     createSelectorItems('selDevice', stats.device);
     createSelectorItems('selOwner', stats.developer);
     createSelectorItems('selReq', stats.requester);
 
-    // แจ้งอัปเดตระบบเรียบร้อยบนแถบด้านบนสุด
+    // แสดงสถานะสำเร็จบน Navbar
     document.getElementById("syncNotify").innerHTML = `<b>⚡ ซิงค์คลังสำเร็จ:</b> ตรวจพบปริมาณเนื้อหารายการจริงจำนวน <b>${cloudSourceData.length} แถว</b>`;
     document.getElementById("syncNotify").style.background = "rgba(55,211,154,0.08)";
     document.getElementById("syncNotify").style.color = "#a1ffd0";
@@ -410,14 +407,14 @@ async function initCoreDatabaseDashboard(){
     runFilteringEngine();
 
   } catch (err) {
-    console.error("Core render error:", err);
+    console.error("Core engine failure:", err);
     document.getElementById("syncNotify").innerText = "❌ เกิดข้อผิดพลาด ไม่สามารถดึงฐานข้อมูลชีตล่าสุดได้สำเร็จ";
     document.getElementById("syncNotify").style.background = "rgba(255,107,107,0.12)";
     document.getElementById("syncNotify").style.color = "#ffb3b3";
   }
 }
 
-// กลไกวาดกราฟเส้นอิงตามความเคลื่อนไหววันที่เปิดเคสปัญหา
+// กราฟเส้นแนวโน้มปัญหา
 function drawTimelineTrendSVG(timelineTimeline){
   const svg = document.getElementById("trendLineSvg");
   if(!svg) return;
@@ -429,8 +426,7 @@ function drawTimelineTrendSVG(timelineTimeline){
   let canvasH = svg.clientHeight || 180;
   svg.setAttribute("viewBox", `0 0 ${canvasW} ${canvasH}`);
 
-  let nodeCoordinates = "";
-  let labelTemplate = "";
+  let nodeCoordinates = ""; let labelTemplate = "";
   let gapX = canvasW / (sortedKeys.length - 1 || 1);
 
   sortedKeys.forEach((dKey, idx) => {
@@ -448,7 +444,7 @@ function drawTimelineTrendSVG(timelineTimeline){
   document.getElementById("trendContainer").insertAdjacentHTML('beforeend', labelTemplate);
 }
 
-// กลไกคำนวณแบ่งเศษส่วนเปอร์เซ็นต์ชาร์ตวงกลม Status
+// ชาร์ตวงกลม Status 
 function drawDonutChart(stMap, grandTotal){
   if(!grandTotal) return;
   let cDone = 0; let cProc = 0; let cNew = 0;
@@ -471,7 +467,7 @@ function drawDonutChart(stMap, grandTotal){
 }
 
 // คอมโพเนนต์แจกแจงแท่งแถบสถิติความถี่ Progress Bars
-function pushProgressBarsUI(containerId, dataMap, colorCls = 'default', limitRows = 4){
+function pushProgressBarsUI(containerId, dataMap, colorCls = 'default', limitRows = 5){
   const container = document.getElementById(containerId);
   if(!container) return;
   const sortedPairs = Object.entries(dataMap).sort((x,y) => y[1] - x[1]);
@@ -485,7 +481,7 @@ function pushProgressBarsUI(containerId, dataMap, colorCls = 'default', limitRow
       <div class="bar-item${classSuffix}">
         <div class="bar-meta">
           <span class="bar-lbl">${escapeHtml(name)}</span>
-          <span class="bar-val">${val} รายการ</span>
+          <span class="bar-val">${val} เคส</span>
         </div>
         <div class="bar-rail"><div class="bar-run" style="width:${ratio}%"></div></div>
       </div>`;
@@ -507,7 +503,7 @@ function createSelectorItems(domId, dataMap){
   selNode.value = memoVal;
 }
 
-// เครื่องยนต์คัดกรองคำค้นหาและการกรองบนตาราง Issue Registry Logs สอดคล้อง แม่นยำ รวดเร็ว
+// เครื่องยนต์คัดกรองตัวกรองและการค้นหาในตารางแผงควบคุม (เรียงคอลลัมน์ตรงเป๊ะ)
 function runFilteringEngine(){
   const bodyNode = document.getElementById("gridTableBody");
   if(!bodyNode) return;
@@ -536,7 +532,7 @@ function runFilteringEngine(){
   document.getElementById("counterRows").innerText = `คัดกรองเจอ ${collection.length} จากทั้งหมด ${cloudSourceData.length} แถวจริง`;
 
   if(collection.length === 0){
-    bodyNode.innerHTML = `<tr><td colspan="11" style="text-align:center; padding:40px; color:var(--muted);">❌ ไม่พบรายการแถวข้อมูลปัญหาที่ตรงตามเงื่อนไขตัวกรองในขณะนี้</td></tr>`;
+    bodyNode.innerHTML = `<tr><td colspan="11" style="text-align:center; padding:40px; color:var(--muted);">❌ ไม่พบข้อมูลปัญหาที่ตรงตามเงื่อนไขตัวกรองในขณะนี้</td></tr>`;
     return;
   }
 
