@@ -587,7 +587,14 @@ function filterEngine(){
       </tr>`;
   }).join('');
 }
+window.addEventListener("DOMContentLoaded", () => {
+    syncDatabaseEngine();
 
+    // ดึงข้อมูลใหม่ทุก 30 วินาที
+    setInterval(() => {
+        syncDatabaseEngine();
+    }, 30000);
+});
 window.addEventListener('DOMContentLoaded', syncDatabaseEngine);
 </script>
 </body>
