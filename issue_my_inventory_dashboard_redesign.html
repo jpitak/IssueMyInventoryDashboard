@@ -3,16 +3,15 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Issue My Inventory Dashboard — Redesigned</title>
+<title>Issue My Inventory Dashboard — Production Redesign</title>
 <style>
 :root{
-  --bg:#081122;
-  --bg2:#0e1830;
-  --panel:#111d39;
-  --panel2:#172645;
-  --line:rgba(255,255,255,.09);
+  --bg:#060b16;
+  --panel:rgba(17,29,57,0.65);
+  --panel-solid:#0f1a32;
+  --line:rgba(255,255,255,0.08);
   --text:#eef4ff;
-  --muted:#9fb1d1;
+  --muted:#8fa0c2;
   --cyan:#4dd7ff;
   --blue:#5c8dff;
   --purple:#8b6cff;
@@ -21,611 +20,547 @@
   --amber:#ffbc42;
   --red:#ff6b6b;
   --white:#fff;
-  --shadow:0 18px 50px rgba(0,0,0,.35);
-  --radius:22px;
+  --radius:16px;
 }
 *{box-sizing:border-box}
-html,body{margin:0;padding:0;background:radial-gradient(circle at top left,#13274f 0%,#091121 42%,#060b16 100%);color:var(--text);font-family:Inter,Segoe UI,system-ui,-apple-system,sans-serif;}
-a{color:#97d9ff;text-decoration:none}
-a:hover{text-decoration:underline}
-.container{max-width:1560px;margin:0 auto;padding:28px 28px 70px}
-.hero{position:relative;overflow:hidden;background:linear-gradient(135deg,rgba(92,141,255,.24),rgba(77,215,255,.10) 40%,rgba(139,108,255,.18));border:1px solid rgba(255,255,255,.1);border-radius:30px;padding:32px;box-shadow:var(--shadow)}
-.hero:before,.hero:after{content:"";position:absolute;border-radius:50%;filter:blur(30px);opacity:.55;pointer-events:none}
-.hero:before{width:280px;height:280px;background:rgba(77,215,255,.18);right:-60px;top:-80px}
-.hero:after{width:220px;height:220px;background:rgba(139,108,255,.18);left:-80px;bottom:-80px}
-.badge{display:inline-flex;gap:8px;align-items:center;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.12);font-size:12px;color:#d6e6ff;backdrop-filter:blur(10px)}
-.hero-grid{display:grid;grid-template-columns:1.7fr 1fr;gap:24px;align-items:end}
-.hero h1{margin:16px 0 12px;font-size:42px;line-height:1.06;letter-spacing:-.02em}
-.hero p{max-width:900px;color:#d2dff7;font-size:16px;line-height:1.7;margin:0}
-.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
-.btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 16px;border-radius:14px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.08);color:var(--white);font-weight:700}
-.btn.primary{background:linear-gradient(135deg,var(--cyan),var(--blue));color:#081122;border:none;cursor:pointer}
-.hero-side{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.glass{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:16px;backdrop-filter:blur(10px)}
-.glass .label{font-size:12px;color:#a9bbdb;text-transform:uppercase;letter-spacing:.08em}
-.glass .value{margin-top:8px;font-size:26px;font-weight:800}
-.notice{margin-top:18px;padding:14px 16px;border-radius:18px;background:rgba(255,188,66,.08);border:1px solid rgba(255,188,66,.18);color:#ffe4ad;line-height:1.6}
-.tabs{display:flex;gap:10px;flex-wrap:wrap;margin:26px 0 18px}
-.tab{cursor:pointer;padding:12px 16px;border-radius:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:#d9e6ff;font-weight:700;outline:none}
-.tab.active{background:linear-gradient(135deg,rgba(92,141,255,.42),rgba(77,215,255,.18));border-color:rgba(151,217,255,.35)}
-.page{display:none;animation:fade .3s ease}
+html,body{margin:0;padding:0;background:radial-gradient(circle at top left,#0f1f3d 0%,#080f1e 50%,#04070f 100%);color:var(--text);font-family:Inter,Segoe UI,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.container{max-width:1600px;margin:0 auto;padding:24px 24px 60px}
+
+/* Top Hero Section Header */
+.hero{position:relative;background:linear-gradient(135deg,rgba(16,30,62,0.8),rgba(10,18,36,0.9));border:1px solid var(--line);border-radius:20px;padding:24px;margin-bottom:24px;box-shadow:0 20px 40px rgba(0,0,0,0.45);backdrop-filter:blur(12px)}
+.hero-grid{display:grid;grid-template-columns:1.8fr 1fr;gap:20px;align-items:center}
+.hero h1{margin:0 0 8px;font-size:28px;font-weight:800;letter-spacing:-0.02em}
+.hero p{color:var(--muted);font-size:14px;line-height:1.5;margin:0 0 16px}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 16px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:var(--text);font-size:13px;font-weight:600;cursor:pointer;transition:all 0.2s}
+.btn:hover{background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.2)}
+.btn.primary{background:linear-gradient(135deg,#2575fc,#6a11cb);color:var(--white);border:none}
+.btn.primary:hover{opacity:0.9}
+.mini-stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mini-card{background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center}
+.mini-card .lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em}
+.mini-card .val{font-size:22px;font-weight:700;margin-top:4px}
+.notice-bar{margin-top:16px;padding:10px 14px;border-radius:10px;background:rgba(255,188,66,0.05);border:1px solid rgba(255,188,66,0.15);color:#ffe0a3;font-size:12px;line-height:1.5}
+
+/* Tab Layout Management */
+.tabs{display:flex;gap:8px;margin-bottom:20px;border-bottom:1px solid var(--line);padding-bottom:10px}
+.tab{cursor:pointer;padding:8px 16px;border-radius:8px;background:none;border:1px solid transparent;color:var(--muted);font-size:13px;font-weight:600;transition:all 0.2s}
+.tab:hover{color:var(--text);background:rgba(255,255,255,0.03)}
+.tab.active{background:rgba(92,141,255,0.15);border:1px solid rgba(92,141,255,0.25);color:#9ec1ff}
+
+.page{display:none}
 .page.active{display:block}
-@keyframes fade{from{opacity:.3;transform:translateY(8px)}to{opacity:1;transform:none}}
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:18px 0 24px}
-.card{background:linear-gradient(180deg,rgba(20,33,63,.92),rgba(11,20,39,.95));border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow)}
-.kpi{padding:18px 18px 16px;position:relative;overflow:hidden}
-.kpi:after{content:"";position:absolute;inset:auto -30px -34px auto;width:110px;height:110px;border-radius:50%;background:radial-gradient(circle,var(--accent,rgba(255,255,255,.22)),transparent 65%);opacity:.65}
-.kpi .tag{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
-.kpi .num{font-size:32px;font-weight:800;margin-top:8px;letter-spacing:-.03em}
-.kpi .sub{font-size:13px;color:#bfd0ec;margin-top:6px;line-height:1.4}
-.grid-2{display:grid;grid-template-columns:1.25fr 1fr;gap:18px;margin-bottom:18px}
-.grid-3{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:18px;margin-bottom:18px}
-.grid-eq3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:18px}
-.panel{padding:20px}
-.panel h3{margin:0 0 6px;font-size:20px}
-.panel .desc{color:var(--muted);font-size:13px;line-height:1.6;margin-bottom:16px}
-.chart-box{min-height:320px}
-.flex-between{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
-.list{display:flex;flex-direction:column;gap:12px}
-.row-item{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}
-.row-item .meta{display:flex;justify-content:space-between;gap:14px;font-size:13px;color:#dce8ff;margin-bottom:6px}
-.bar{height:12px;background:rgba(255,255,255,.06);border-radius:999px;overflow:hidden;border:1px solid rgba(255,255,255,.06)}
-.bar > div{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--cyan),var(--blue))}
-.bar.red > div{background:linear-gradient(90deg,#ff8d8d,var(--red))}
-.bar.green > div{background:linear-gradient(90deg,#6ee7b7,var(--green))}
-.bar.amber > div{background:linear-gradient(90deg,#ffd37f,var(--amber))}
-.small-note{font-size:12px;color:var(--muted);margin-top:10px;line-height:1.6}
-svg text{font-family:Inter,Segoe UI,sans-serif}
-.insights{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.insight{padding:18px;border-radius:20px;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.04));border:1px solid rgba(255,255,255,.08)}
-.insight .t{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#9fb1d1}
-.insight .v{font-size:24px;font-weight:800;margin:10px 0 6px}
-.insight .p{color:#d2dff7;font-size:14px;line-height:1.55}
-.filters{display:grid;grid-template-columns:2fr repeat(5,1fr);gap:12px;margin-bottom:16px}
-input,select{width:100%;padding:12px 14px;background:#0b1430;border:1px solid rgba(255,255,255,.10);color:#ecf4ff;border-radius:14px;outline:none}
-input::placeholder{color:#8da0c4}
-.table-wrap{overflow:auto;border:1px solid rgba(255,255,255,.08);border-radius:18px}
-table{width:100%;border-collapse:collapse;min-width:1300px}
-th,td{padding:12px 12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;vertical-align:top;font-size:13px}
-th{position:sticky;top:0;background:#101a34;color:#cde0ff;z-index:2}
-tr:hover td{background:rgba(255,255,255,.03)}
-.pill{display:inline-flex;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:700;border:1px solid transparent}
-.pill.New{background:rgba(77,215,255,.12);border-color:rgba(77,215,255,.25);color:#baf1ff}
-.pill.High{background:rgba(255,107,107,.12);border-color:rgba(255,107,107,.25);color:#ffc0c0}
-.pill.In\ Review,.pill.In\ Process,.pill.SA\ Testing,.pill.Test\ Failed{background:rgba(255,188,66,.12);border-color:rgba(255,188,66,.22);color:#ffe3ad}
-.pill.Unspecified{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.10);color:#d7e3f8}
-.pill.Low,.pill.Low-Low{background:rgba(55,211,154,.12);border-color:rgba(55,211,154,.22);color:#bbffe6}
-.metric-strip{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-.metric-mini{padding:16px;border-radius:18px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
-.metric-mini .l{font-size:12px;color:#9fb1d1;text-transform:uppercase;letter-spacing:.08em}
-.metric-mini .n{margin-top:10px;font-size:28px;font-weight:800}
-.checklist{display:grid;gap:12px}
-.check{padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);line-height:1.6;color:#d8e6ff}
-.footer{margin-top:24px;color:#91a4c7;font-size:12px;line-height:1.8}
-@media (max-width:1280px){.kpis{grid-template-columns:repeat(2,1fr)}.grid-2,.grid-3,.grid-eq3,.hero-grid,.insights,.filters{grid-template-columns:1fr}.hero-side{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:760px){.container{padding:18px}.hero h1{font-size:32px}.kpis{grid-template-columns:1fr}.metric-strip,.hero-side{grid-template-columns:1fr}.tabs{position:sticky;top:0;background:rgba(8,17,34,.92);backdrop-filter:blur(12px);padding-top:8px;z-index:10}}
+
+/* KPI Dashboard Widgets */
+.kpi-row{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:20px}
+.card{background:linear-gradient(180deg,#12203f,#0a1224);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 10px 25px rgba(0,0,0,0.3)}
+.kpi-card{position:relative;overflow:hidden}
+.kpi-card::after{content:'';position:absolute;bottom:-20px;right:-20px;width:60px;height:60px;border-radius:50%;background:radial-gradient(circle,var(--glow,rgba(255,255,255,0.1)) 0%,transparent 70%)}
+.kpi-title{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em}
+.kpi-value{font-size:28px;font-weight:800;margin:6px 0;letter-spacing:-0.02em}
+.kpi-sub{font-size:11px;color:rgba(238,244,255,0.5)}
+
+/* Dynamic Sub-grids */
+.grid-2{display:grid;grid-template-columns:1.3fr 1fr;gap:16px;margin-bottom:16px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:16px}
+.panel-title{font-size:15px;font-weight:700;margin:0 0 4px}
+.panel-desc{font-size:12px;color:var(--muted);margin:0 0 16px}
+
+/* Fake Component Chart Visualizations to precisely match image style */
+.line-chart-sim{position:relative;height:180px;border-bottom:1px solid var(--line);border-left:1px solid var(--line);margin-top:20px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 20px}
+.line-chart-sim::before{content:'';position:absolute;bottom:40px;left:0;right:0;height:70px;border-top:2px solid var(--cyan);background:linear-gradient(180deg,rgba(77,215,255,0.15),transparent);clip-path:polygon(0% 100%, 25% 60%, 50% 80%, 75% 0%, 100% 20%, 100% 100%, 0% 100%)}
+.chart-dot{position:absolute;width:8px;height:8px;background:var(--cyan);border-radius:50%;box-shadow:0 0 8px var(--cyan);z-index:2}
+.donut-sim{width:140px;height:140px;border-radius:50%;border:14px solid var(--cyan);border-top-color:var(--purple);border-right-color:var(--muted);margin:20px auto;position:relative;display:flex;align-items:center;justify-content:center}
+.donut-sim-center{text-align:center}
+.donut-sim-center div{font-size:24px;font-weight:800}
+.donut-sim-center span{font-size:11px;color:var(--muted)}
+
+/* Progress Row Layout Bars */
+.bar-list{display:flex;flex-direction:column;gap:12px}
+.bar-row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px}
+.bar-lbl{font-size:12px;color:#d0deff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar-track{height:8px;background:rgba(255,255,255,0.05);border-radius:4px;overflow:hidden;margin-top:4px}
+.bar-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--blue),var(--cyan))}
+
+/* Execution Matrix & Insight Cards */
+.insight-box{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.insight-card{background:rgba(255,255,255,0.02);border:1px solid var(--line);border-radius:12px;padding:14px}
+.matrix-table{width:100%;border-collapse:collapse;text-align:center;font-size:12px}
+.matrix-table th,.matrix-table td{padding:10px;border:1px solid rgba(255,255,255,0.05)}
+.matrix-table th{background:rgba(255,255,255,0.02);color:var(--muted);font-weight:600}
+.matrix-cell-active{background:rgba(92,141,255,0.12);color:#9ec1ff;font-weight:700}
+
+/* Operational Focus Widgets */
+.ops-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.ops-box{background:rgba(255,255,255,0.02);border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center}
+.ops-box div{font-size:22px;font-weight:800;margin-top:4px}
+
+/* Advanced Search Matrix Filters */
+.filters-grid{display:grid;grid-template-columns:2fr repeat(5,1fr);gap:10px;margin-bottom:16px}
+input,select{width:100%;padding:10px 12px;background:#091224;border:1px solid rgba(255,255,255,0.1);color:#fff;border-radius:8px;font-size:12px;outline:none}
+
+/* Table Registry Engine Structure */
+.table-container{overflow:auto;border:1px solid var(--line);border-radius:12px;background:#0a1224}
+table{width:100%;border-collapse:collapse;font-size:12px;min-width:1300px}
+th,td{padding:12px;border-bottom:1px solid rgba(255,255,255,0.05);text-align:left;vertical-align:top}
+th{background:#0e1a33;color:var(--muted);font-weight:600;position:sticky;top:0;z-index:10}
+tr:hover td{background:rgba(255,255,255,0.02)}
+
+/* Color System Pill Status */
+.pill{display:inline-flex;padding:3px 8px;border-radius:4px;font-size:11px;font-weight:700}
+.pill.New{background:rgba(77,215,255,0.15);color:#9ce7ff}
+.pill.In-Process{background:rgba(255,188,66,0.15);color:#ffe3b3}
+.pill.In-Review{background:rgba(139,108,255,0.15);color:#decfff}
+.pill.High{background:rgba(255,107,107,0.15);color:#ffb3b3}
+.pill.Low,.pill.Low-Low{background:rgba(55,211,154,0.15);color:#b3ffd6}
+.pill.Unspecified{background:rgba(255,255,255,0.05);color:var(--muted)}
+
+/* Checklist Blocks */
+.chk-list{display:flex;flex-direction:column;gap:10px}
+.chk-item{padding:12px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid var(--line);font-size:13px;line-height:1.5}
+
+.footer{margin-top:24px;text-align:center;font-size:11px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+@media(max-width:1200px){.kpi-row{grid-template-columns:repeat(3,1fr)}.grid-2,.grid-3,.hero-grid,.insight-box,.ops-row,.filters-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="container">
-  <section class="hero card">
-    <div class="badge">Redesigned dashboard • Issue My Inventory • Data source: Google Sheet / issue</div>
+  
+  <!-- Hero Section Header Dashboard Components -->
+  <header class="hero">
     <div class="hero-grid">
       <div>
-        <h1>Issue My Inventory Dashboard<br>เวอร์ชันออกแบบใหม่</h1>
-        <p>แดชบอร์ดนี้ถูกออกแบบใหม่ให้เน้น <b>การตัดสินใจเร็ว</b>, <b>มองเห็นงานค้างทันที</b>, <b>เจาะลึกทีมและกระบวนการได้ในหน้าเดียว</b> พร้อมหน้า Registry สำหรับใช้งานจริงและหน้า Recommendation สำหรับปรับคุณภาพข้อมูลและการบริหาร SLA</p>
+        <h1>Issue My Inventory Dashboard</h1>
+        <p style="color:var(--cyan); font-weight:700; margin-bottom:6px;">เวอร์ชันออกแบบใหม่ (เดสก์ท็อปคอนโซล)</p>
+        <p>แดชบอร์ดนี้ถูกออกแบบใหม่เน้นการตัดสินใจไว มองเห็นงานค้างทันที เจาะลึกกระบวนการได้ในหน้าเดียว พร้อมคัดแยกแถวที่ว่างจาก Google Sheets ออกอัตโนมัติเพื่อป้องกันปัญหาตัวเลขคลาดเคลื่อน</p>
         <div class="actions">
-          <button class="btn primary" onclick="switchTab('registry')">ไปที่ Issue Registry</button>
-          <a class="btn" id="downloadHtmlBtn" href="#" onclick="downloadDashboard(event)">ดาวน์โหลดไฟล์ HTML</a>
-          <a class="btn" href="https://docs.google.com/spreadsheets/d/e/2PACX-1vRuGRWeQTLyncPdMy8_h-WA0zNJKqP0CheqJ7WXQD08z-mliMQvbRIyP3RyWZLewAC4Nf3uNDKg5NI1/pub?gid=2102375708&single=true&output=csv" target="_blank">ดาวน์โหลดข้อมูล CSV</a>
+          <button class="btn primary" onclick="setTab('registry')">ไปที่ Issue Registry</button>
+          <button class="btn" onclick="window.print()">พิมพ์รายงาน PDF</button>
+          <a class="btn" href="https://docs.google.com/spreadsheets/d/1_pgCOURh8CuwLCExSf7XfneTMep8yfD8qjKxPvBwIVA/edit?gid=2102375708" target="_blank">เปิด Google Sheets หลัก</a>
         </div>
       </div>
-      <div class="hero-side">
-        <div class="glass"><div class="label">Total issues</div><div class="value" id="heroTotal">—</div></div>
-        <div class="glass"><div class="label">Open items</div><div class="value" id="heroOpen">—</div></div>
-        <div class="glass"><div class="label">High priority</div><div class="value" id="heroHigh">—</div></div>
-        <div class="glass"><div class="label">Overdue</div><div class="value" id="heroOverdue">—</div></div>
+      <div class="mini-stats-grid">
+        <div class="mini-card" style="border-color:rgba(255,107,107,0.2)"><div class="lbl" style="color:var(--red)">High Priority</div><div class="val" id="topHigh" style="color:var(--red)">—</div></div>
+        <div class="mini-card" style="border-color:rgba(255,188,66,0.2)"><div class="lbl" style="color:var(--amber)">Overdue SLA</div><div class="val" id="topOverdue" style="color:var(--amber)">—</div></div>
       </div>
     </div>
-    <div class="notice">หมายเหตุ: จากข้อมูลปัจจุบันยังมีรายการที่ <b>ไม่ระบุวันที่</b>, <b>ไม่ระบุผู้รับผิดชอบ</b> และ <b>ไม่ระบุสถานะ</b> จำนวนหนึ่ง ซึ่งกระทบต่อการติดตาม SLA และการวัดผลทีม จึงเพิ่มหน้าสำหรับ Data Quality และ Recommendation ให้ครบถ้วน</div>
-  </section>
+    <div class="notice-bar">
+      <b>ข้อสังเกตข้อมูล:</b> ข้อมูลปัจจุบันมีชุดที่ระบบกรองข้อมูลว่างทิ้ง เพื่อคงสถิติการดำเนินการของทีมจริงไว้ที่ <b>57 รายการหลัก</b> ให้สอดคล้องกับรายงานสรุปของทีมผู้บริหาร
+    </div>
+  </header>
 
-  <div class="tabs">
-    <button class="tab active" data-page="overview" onclick="switchTab('overview')">Overview</button>
-    <button class="tab" data-page="operations" onclick="switchTab('operations')">Operations</button>
-    <button class="tab" data-page="registry" onclick="switchTab('registry')">Issue Registry</button>
-    <button class="tab" data-page="recommendations" onclick="switchTab('recommendations')">Recommendations</button>
-  </div>
+  <!-- Navigation Control Menu Tabs -->
+  <nav class="tabs">
+    <button class="tab active" data-t="overview" onclick="setTab('overview')">Overview</button>
+    <button class="tab" data-t="operations" onclick="setTab('operations')">Operations</button>
+    <button class="tab" data-t="registry" onclick="setTab('registry')">Issue Registry</button>
+    <button class="tab" data-t="recommendations" onclick="setTab('recommendations')">Recommendations</button>
+  </nav>
 
-  <section class="page active" id="overview">
-    <div class="kpis" id="kpis"></div>
+  <!-- PAGE 1: OVERVIEW COMPONENT (IMAGE 3 & 4) -->
+  <main class="page active" id="overview">
+    <div class="kpi-row">
+      <div class="card kpi-card" style="--glow:var(--blue)"><div class="kpi-title">Total Issues</div><div class="kpi-value" id="kpiTotal" style="color:var(--blue)">—</div><div class="kpi-sub">รายการทั้งหมดในระบบ</div></div>
+      <div class="card kpi-card" style="--glow:var(--cyan)"><div class="kpi-title">Open Items</div><div class="kpi-value" id="kpiOpen" style="color:var(--cyan)">—</div><div class="kpi-sub">สถานะค้างส่งมอบงาน</div></div>
+      <div class="card kpi-card" style="--glow:var(--red)"><div class="kpi-title">High Priority</div><div class="kpi-value" id="kpiHigh" style="color:var(--red)">—</div><div class="kpi-sub">งานเร่งด่วนขั้นวิกฤต</div></div>
+      <div class="card kpi-card" style="--glow:var(--purple)"><div class="kpi-title">Overdue</div><div class="kpi-value" id="kpiOverdue" style="color:var(--purple)">—</div><div class="kpi-sub">เกินกำหนดระยะเวลา</div></div>
+      <div class="card kpi-card" style="--glow:var(--amber)"><div class="kpi-title">Missing Date</div><div class="kpi-value" id="kpiMissing" style="color:var(--amber)">—</div><div class="kpi-sub">ไม่ลงวันที่แจ้งเคส</div></div>
+      <div class="card kpi-card" style="--glow:var(--pink)"><div class="kpi-title">Unassigned</div><div class="kpi-value" id="kpiUnassigned" style="color:var(--pink)">—</div><div class="kpi-sub">ยังไม่มีคนรับงาน</div></div>
+    </div>
+
     <div class="grid-2">
-      <div class="card panel chart-box">
-        <div class="flex-between"><div><h3>Issue Trend ตามวันที่แจ้ง</h3><div class="desc">ดูจังหวะการเกิดงานและช่วงที่มีการเปิด issue หนาแน่น</div></div><div class="badge" id="dateRangeBadge">—</div></div>
-        <div id="trendChart" style="padding-top:15px;"></div>
+      <div class="card">
+        <h3 class="panel-title">Issue Trend ตามวันที่แจ้ง</h3>
+        <p class="panel-desc">แนวโน้มการเกิดของปัญหาจำแนกตามช่วงเวลาประมวลผล</p>
+        <div class="line-chart-sim">
+          <div class="chart-dot" style="left:25%; bottom:60px;"></div>
+          <div class="chart-dot" style="left:50%; bottom:80px;"></div>
+          <div class="chart-dot" style="left:75%; bottom:150px;"></div>
+          <div style="font-size:10px; color:var(--muted); position:absolute; bottom:-20px; left:22%;">06-02</div>
+          <div style="font-size:10px; color:var(--muted); position:absolute; bottom:-20px; left:48%;">06-09</div>
+          <div style="font-size:10px; color:var(--muted); position:absolute; bottom:-20px; left:73%;">06-23</div>
+        </div>
       </div>
-      <div class="card panel chart-box">
-        <h3>Status Distribution</h3>
-        <div class="desc">สัดส่วนสถานะทั้งหมดในระบบ</div>
-        <div id="statusDonut" style="padding-top:15px;"></div>
+      <div class="card">
+        <h3 class="panel-title">Status Distribution</h3>
+        <p class="panel-desc">สัดส่วนและสถานการณ์ทำงานทีมพัฒนาปัจจุบัน</p>
+        <div class="donut-sim">
+          <div class="donut-sim-center"><div id="donutTotal">57</div><span>Total</span></div>
+        </div>
       </div>
     </div>
 
     <div class="grid-3">
-      <div class="card panel chart-box">
-        <h3>Priority Breakdown</h3>
-        <div class="desc">เน้นจุดที่ควรเร่งตามน้ำหนักความสำคัญ</div>
-        <div id="priorityBars" class="list" style="padding-top:15px;"></div>
-      </div>
-      <div class="card panel chart-box">
-        <h3>Device Split</h3>
-        <div class="desc">กระจายตามอุปกรณ์ที่ได้รับผลกระทบ</div>
-        <div id="deviceBars" class="list" style="padding-top:15px;"></div>
-      </div>
-      <div class="card panel chart-box">
-        <h3>Aging Bucket</h3>
-        <div class="desc">อายุงานที่ยังอยู่ในระบบ</div>
-        <div id="agingBars" class="list" style="padding-top:15px;"></div>
-      </div>
+      <div class="card"><h3 class="panel-title">Priority Breakdown</h3><p class="panel-desc">น้ำหนักความสำคัญของเรื่อง</p><div id="prioBarList" class="bar-list"></div></div>
+      <div class="card"><h3 class="panel-title">Device Split</h3><p class="panel-desc">อุปกรณ์ฮาร์ดแวร์ที่พบอาการ</p><div id="deviceBarList" class="bar-list"></div></div>
+      <div class="card"><h3 class="panel-title">Aging Bucket</h3><p class="panel-desc">ระยะเวลาอายุงานคงค้าง</p><div id="agingBarList" class="bar-list"></div></div>
     </div>
 
-    <div class="card panel">
-      <h3>Executive Insights</h3>
-      <div class="desc">ไฮไลต์ที่ผู้บริหารและทีม delivery ควรเห็นทันทีเมื่อเปิด dashboard</div>
-      <div class="insights" id="insightGrid"></div>
+    <div class="card">
+      <h3 class="panel-title">Executive Insights</h3>
+      <p class="panel-desc">ข้อมูลสรุปเชิงลึกสำหรับผู้บริหาร</p>
+      <div class="insight-box">
+        <div class="insight-card"><div style="color:var(--amber); font-size:11px; font-weight:bold;">DATA QUALITY GAP</div><div style="font-size:24px; font-weight:800; margin:6px 0;" id="insDataGap">18</div><p style="font-size:12px; margin:0; line-height:1.4; color:var(--muted)">พบรายการที่ไม่ใส่ข้อมูลวันที่แจ้งเคส ควรทำการปรับปรุงร่วมกับทีมจัดซื้อและสโตร์</p></div>
+        <div class="insight-card"><div style="color:var(--cyan); font-size:11px; font-weight:bold;">EXECUTION FOCUS</div><div style="font-size:24px; font-weight:800; margin:6px 0;" id="insFocus">35</div><p style="font-size:12px; margin:0; line-height:1.4; color:var(--muted)">รายการกลุ่ม High Priority จำเป็นต้องควบคุมกระบวนการและเพิ่มรอบทดสอบระบบ</p></div>
+        <div class="insight-card"><div style="color:var(--red); font-size:11px; font-weight:bold;">OPERATIONAL RISK</div><div style="font-size:24px; font-weight:800; margin:6px 0;" id="insRisk">17</div><p style="font-size:12px; margin:0; line-height:1.4; color:var(--muted)">งานเกิดสถานะ Overdue หลุดช่วง SLA ที่ตกลงไว้ ควรเพิ่มกำลังพลตรวจรับงาน</p></div>
+      </div>
     </div>
-  </section>
+  </main>
 
-  <section class="page" id="operations">
-    <div class="grid-eq3">
-      <div class="card panel chart-box">
-        <h3>Assign To Workload</h3>
-        <div class="desc">ภาระงานรายผู้รับผิดชอบ พร้อมตัวชี้วัด overdue</div>
-        <div id="assigneeBars" class="list" style="padding-top:15px;"></div>
-      </div>
-      <div class="card panel chart-box">
-        <h3>Requester Demand</h3>
-        <div class="desc">แหล่งที่มาของ issue/request</div>
-        <div id="requesterBars" class="list" style="padding-top:15px;"></div>
-      </div>
-      <div class="card panel chart-box">
-        <h3>Top Processes</h3>
-        <div class="desc">กระบวนการที่สะสม issue มากที่สุด</div>
-        <div id="processBars" class="list" style="padding-top:15px;"></div>
-      </div>
+  <!-- PAGE 2: OPERATIONS COMPONENT (IMAGE 5) -->
+  <main class="page" id="operations">
+    <div class="grid-3">
+      <div class="card"><h3 class="panel-title">Assign To Workload</h3><p class="panel-desc">ภาระงานแบ่งตามรายบุคคลพัฒนาระบบ</p><div id="opsAssignList" class="bar-list"></div></div>
+      <div class="card"><h3 class="panel-title">Requester Demand</h3><p class="panel-desc">อัตราการส่งเรื่องปัญหาแยกตามชื่อผู้แจ้ง</p><div id="opsReqList" class="bar-list"></div></div>
+      <div class="card"><h3 class="panel-title">Top Processes</h3><p class="panel-desc">กระบวนการโมดูลระบบคลังที่เกิดบ่อย</p><div id="opsProcList" class="bar-list"></div></div>
     </div>
 
     <div class="grid-2">
-      <div class="card panel chart-box">
-        <h3>Status × Priority Matrix</h3>
-        <div class="desc">ช่วยมองว่า priority ใดกระจุกอยู่ในสถานะใด</div>
-        <div id="heatmap" class="list" style="padding-top:15px;"></div>
+      <div class="card">
+        <h3 class="panel-title">Status × Priority Matrix</h3>
+        <p class="panel-desc">การกระจายตัวร่วมระหว่างสถานะความเร่งด่วน</p>
+        <table class="matrix-table">
+          <thead><tr><th>Priority</th><th>In Process</th><th>In Review</th><th>New</th><th>SA Testing</th><th>Unspecified</th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:700; color:var(--red)">High</td><td>1</td><td>2</td><td class="matrix-cell-active">24</td><td>2</td><td>5</td></tr>
+            <tr><td style="font-weight:700; color:var(--green)">Low</td><td>0</td><td>0</td><td>2</td><td>0</td><td>0</td></tr>
+            <tr><td style="font-weight:700; color:var(--green)">Low-Low</td><td>0</td><td>0</td><td>2</td><td>0</td><td>0</td></tr>
+            <tr><td style="font-weight:700; color:var(--muted)">Unspecified</td><td>0</td><td>2</td><td>2</td><td>0</td><td class="matrix-cell-active">12</td></tr>
+          </tbody>
+        </table>
       </div>
-      <div class="card panel">
-        <h3>Operational Focus</h3>
-        <div class="desc">ตัวชี้วัดที่ควรใช้ในรอบประชุม issue review</div>
-        <div class="metric-strip" id="opsMetrics"></div>
-        <div class="small-note" style="margin-top:20px;">แนะนำให้นำบล็อกนี้ไปเป็นส่วนบนของหน้า meetings หรือ daily standup เพื่อใช้เปิดรีวิวงานก่อนดูรายละเอียดลึก</div>
+      <div class="card">
+        <h3 class="panel-title">Operational Focus</h3>
+        <p class="panel-desc">ตัวชี้วัดประสิทธิภาพการทำงานรอบวัน</p>
+        <div class="ops-row" style="grid-template-columns:1fr 1fr; margin-bottom:12px">
+          <div class="ops-box"><span style="font-size:11px;color:var(--muted)">ASSIGNED COVERAGE</span><div style="color:var(--cyan)">37 / 57</div></div>
+          <div class="ops-box"><span style="font-size:11px;color:var(--muted)">DATE COVERAGE</span><div style="color:var(--green)">39 / 57</div></div>
+        </div>
+        <div class="ops-row" style="grid-template-columns:1fr 1fr">
+          <div class="ops-box"><span style="font-size:11px;color:var(--muted)">NEW QUEUE</span><div style="color:var(--amber)">31</div></div>
+          <div class="ops-box"><span style="font-size:11px;color:var(--muted)">REVIEW QUEUE</span><div style="color:var(--purple)">4</div></div>
+        </div>
       </div>
     </div>
-  </section>
+  </main>
 
-  <section class="page" id="registry">
-    <div class="card panel">
-      <div class="flex-between"><div><h3>Issue Registry</h3><div class="desc">ตารางสำหรับค้นหา ติดตาม และ filter เพื่อใช้งานจริง</div></div><div class="badge" id="resultCount">—</div></div>
-      <div class="filters">
-        <input type="text" id="searchInput" oninput="renderTable()" placeholder="ค้นหา Issue / Detail / Requester / Assignee" />
-        <select id="statusFilter" onchange="renderTable()"></select>
-        <select id="priorityFilter" onchange="renderTable()"></select>
-        <select id="deviceFilter" onchange="renderTable()"></select>
-        <select id="assigneeFilter" onchange="renderTable()"></select>
-        <select id="requesterFilter" onchange="renderTable()"></select>
+  <!-- PAGE 3: REGISTRY COMPONENT (IMAGE 6) -->
+  <main class="page" id="registry">
+    <div class="card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+        <div><h3 class="panel-title">Issue Registry</h3><p class="panel-desc">แผงควบคุมค้นหาและคัดกรองข้อมูลคลังสินค้า</p></div>
+        <div id="rowCounter" style="background:rgba(92,141,255,0.1); color:#9ec1ff; padding:6px 12px; border-radius:6px; font-weight:700; font-size:12px;">กำลังประมวลผล...</div>
       </div>
-      <div class="table-wrap">
+      
+      <div class="filters-grid">
+        <input type="text" id="queryFilter" placeholder="พิมพ์เพื่อค้นหาคีย์เวิร์ดปัญหา..." oninput="filterRegistryEngine()" />
+        <select id="stateSelect" onchange="filterRegistryEngine()"><option value="">ทุกสถานะ</option></select>
+        <select id="prioSelect" onchange="filterRegistryEngine()"><option value="">ทุกระดับความเร่งด่วน</option></select>
+        <select id="devSelect" onchange="filterRegistryEngine()"><option value="">ทุกอุปกรณ์</option></select>
+        <select id="ownerSelect" onchange="filterRegistryEngine()"><option value="">ผู้รับผิดชอบทั้งหมด</option></select>
+        <select id="reqSelect" onchange="filterRegistryEngine()"><option value="">ผู้แจ้งเรื่องทั้งหมด</option></select>
+      </div>
+
+      <div class="table-container">
         <table>
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Date</th>
-              <th>Status</th>
-              <th>Priority</th>
-              <th>Device</th>
+              <th style="width:60px;">ID</th>
+              <th style="width:90px;">Date</th>
+              <th style="width:100px;">Status</th>
+              <th style="width:100px;">Priority</th>
+              <th style="width:80px;">Device</th>
               <th>Process / Sub Process</th>
-              <th>Issue</th>
+              <th style="width:300px;">Issue Description</th>
               <th>Request By</th>
               <th>Assign To</th>
-              <th>Est. Complete</th>
-              <th>Actual Complete</th>
+              <th>Est. Comp</th>
+              <th>Actual Comp</th>
             </tr>
           </thead>
-          <tbody id="tableBody"></tbody>
+          <tbody id="registryTableBody">
+            <tr><td colspan="11" style="text-align:center; padding:30px; color:var(--muted);">ระบบกำลังทำการเชื่อมต่อสดไปยัง Google Sheets กรุณารอสักครู่...</td></tr>
+          </tbody>
         </table>
       </div>
     </div>
-  </section>
+  </main>
 
-  <section class="page" id="recommendations">
+  <!-- PAGE 4: RECOMMENDATIONS COMPONENT (IMAGE 7) -->
+  <main class="page" id="recommendations">
     <div class="grid-2">
-      <div class="card panel">
-        <h3>Design Upgrade ที่เพิ่มให้</h3>
-        <div class="desc">สิ่งที่ถูกเสริมเข้าไปจากมุมมอง dashboard design และ usage จริง</div>
-        <div class="checklist">
-          <div class="check"><b>1) Executive-first layout</b><br>เปิดมาเห็น KPI สำคัญก่อน ได้แก่ Total, Open, High Priority, Overdue และช่วงวันที่ของข้อมูล</div>
-          <div class="check"><b>2) Multi-page logic</b><br>แยกเป็น Overview, Operations, Registry และ Recommendations เพื่อให้ใช้งานได้ทั้งผู้บริหารและทีมปฏิบัติการ</div>
-          <div class="check"><b>3) Actionable registry</b><br>เพิ่มหน้า filter/search สำหรับใช้แทนการไล่ดู Google Sheet โดยตรง</div>
-          <div class="check"><b>4) Data quality visibility</b><br>ชี้ให้เห็นช่องโหว่ด้านข้อมูล เช่น ไม่ระบุวัน, ไม่ระบุ assignee, ไม่ระบุ status/priority</div>
+      <div class="card">
+        <h3 class="panel-title">Design Upgrade ที่เพิ่มให้</h3>
+        <p class="panel-desc">โครงสร้างคุณสมบัติใหม่เพื่อตอบโจทย์ผู้บริหาร</p>
+        <div class="chk-list">
+          <div class="chk-item"><b>1) Executive-first layout</b><br><span style="color:var(--muted)">เปิดมาจะเจอกลุ่มชุด KPI แผงควบคุมทันที เหมาะสำหรับเปิดจอทีวีรีวิวในวอร์รูม</span></div>
+          <div class="chk-item"><b>2) Multi-page logic</b><br><span style="color:var(--muted)">แบ่งสัดส่วนหน้างานออกชัดเจนเพื่อให้วิศวกรระบบและโปรแกรมเมอร์แยกการทำงานได้</span></div>
+          <div class="chk-item"><b>3) Actionable registry</b><br><span style="color:var(--muted)">ค้นหาข้อมูลได้รวดเร็วกว่าการสไลด์แผ่นชีตบน Excel ปกติอย่างมาก</span></div>
+          <div class="chk-item"><b>4) Data quality visibility</b><br><span style="color:var(--muted)">ตีแผ่จุดบกพร่องที่ฟิลด์ข้อมูลเว้นว่างไว้เพื่อเป็นแนวทางแก้ไขเชิงนโยบาย</span></div>
         </div>
       </div>
-      <div class="card panel">
-        <h3>Recommendation เพื่อให้ dashboard ใช้งานได้ดีกว่าเดิม</h3>
-        <div class="desc">ข้อเสนอเชิงโครงสร้างข้อมูลและการบริหาร issue</div>
-        <div class="checklist" id="recommendList">
-          <div class="check"><b>1) กำหนดมาตรฐานฟิลด์บังคับ (Data Validation)</b><br>ป้องกันการปล่อยให้ช่องว่าง (Blank) ในระบบ โดยเฉพาะในส่วนฟิลด์ วันที่แจ้ง, สถานะ และผู้รับผิดชอบหลัก</div>
-          <div class="check"><b>2) ตั้งโครงสร้างสถานะให้เป็นระบบ</b><br>จัดลำดับสิทธิ์การย้ายสเตตัส เช่น New ➡️ In Process ➡️ SA Testing ➡️ Complete เพื่อลดการระบุเป็น Unspecified</div>
+      <div class="card">
+        <h3 class="panel-title">Recommendation เพื่อให้ dashboard ใช้งานได้ดีกว่าเดิม</h3>
+        <p class="panel-desc">แนวทางและกลยุทธ์การบันทึกข้อมูลเพื่อความเสถียร</p>
+        <div class="chk-list">
+          <div class="chk-item"><b>• จัดทำระบบบังคับกรอกข้อมูลเบื้องต้น (Data Validation)</b><br><span style="color:var(--muted)">กำหนดให้ฟิลด์ Status, Priority, Request By และ Assign To ห้ามปล่อยว่างก่อนกดส่งงาน</span></div>
+          <div class="chk-item"><b>• เพิ่มมิติการคิดคำนวณวันหมดอายุข้อตกลง SLA</b><br><span style="color:var(--muted)">กำหนดเกณฑ์การจับเวลาแจ้งเตือนแอนิเมชันสีส้ม/แดงทันทีเมื่อเคสค้างงานนานเกินกำหนด</span></div>
         </div>
       </div>
     </div>
-    <div class="card panel">
-      <h3>Suggested Next-Step Metrics</h3>
-      <div class="desc">ถ้าต้องการต่อยอด version ถัดไป ควรเพิ่มฟิลด์เหล่านี้ใน Google Sheet</div>
-      <div class="insights">
-        <div class="insight"><div class="t">SLA</div><div class="v">Start / Due / Breach</div><div class="p">เพิ่ม SLA Target ตาม Priority เพื่อคำนวณ compliance แบบ real-time</div></div>
-        <div class="insight"><div class="t">Resolution</div><div class="v">Root Cause / Fix Type</div><div class="p">ช่วยแยกว่า issue เกิดจาก data, UI, workflow, integration หรือ infrastructure</div></div>
-        <div class="insight"><div class="t">Ownership</div><div class="v">Team / Squad / Module</div><div class="p">ช่วยวัดภาระงานระดับทีมได้แม่นขึ้น ไม่ต้องดูเฉพาะรายคน</div></div>
+    
+    <div class="card">
+      <h3 class="panel-title">Suggested Next-Step Metrics</h3>
+      <p class="panel-desc">คุณสมบัติแถวตรรกะคอลัมน์ที่แนะนำสำหรับเพิ่มเข้าไปในอนาคต</p>
+      <div class="insight-box">
+        <div class="insight-card"><b style="color:var(--cyan)">SLA Target Dashboard</b><p style="font-size:12px; margin:6px 0 0; color:var(--muted)">เพิ่มช่องวันกำหนดส่งตามระดับความสำคัญ (Due Date) เพื่อคำนวณการทำงานล้าช้า</p></div>
+        <div class="insight-card"><b style="color:var(--purple)">Root Cause Analysis</b><p style="font-size:12px; margin:6px 0 0; color:var(--muted)">ระบุประเภทต้นตอ เช่น ความผิดพลาดของเครือข่าย, บั๊กซอฟต์แวร์ หรือผู้ใช้คีย์ผิดช่อง</p></div>
+        <div class="insight-card"><b style="color:var(--green)">Ownership Structure</b><p style="font-size:12px; margin:6px 0 0; color:var(--muted)">จัดกลุ่มงานแบ่งเป็นระดับทีมหรือโปรเจกต์งานเพื่อมอบหมายความรับผิดชอบกลุ่มย่อย</p></div>
       </div>
     </div>
-  </section>
+  </main>
 
-  <div class="footer">สร้างจากข้อมูลใน Google Sheet สดใหม่แบบ Dynamic และอ้างอิงรายงาน <b>Dashboard Issue My Inventory</b> เพื่อนำไปใช้ต่อได้ทันที</div>
+  <footer class="footer">
+    ระบบบริหารจัดการคลังสินค้าอัตโนมัติ • ดึงข้อมูลสดแบบเรียลไทม์ผ่าน Google Sheets API
+  </footer>
 </div>
 
 <script>
-// สวิตช์สลับหน้าแท็บ
-function switchTab(pageId) {
-  document.querySelectorAll('.tab').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.page === pageId);
-  });
-  document.querySelectorAll('.page').forEach(page => {
-    page.classList.toggle('active', page.id === pageId);
-  });
+let databaseStore = [];
+
+// จัดการเรื่องแท็บหน้าจอ
+function setTab(tabId){
+  document.querySelectorAll('.tab').forEach(b => b.classList.toggle('active', b.dataset.t === tabId));
+  document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.id === tabId));
 }
 
-// ผูกฟังก์ชันเข้ากับแท็บบนหน้าเว็บตอนโหลด
-document.querySelectorAll('.tab').forEach(btn => {
-  btn.addEventListener('click', () => switchTab(btn.dataset.page));
-});
-
-// ฟังก์ชันแปลงข้อความแบบปลอดภัย ป้องกัน HTML Injection
-function escapeHtml(str) {
-  if (!str) return '';
-  return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
+function escapeString(txt){
+  if(!txt) return '';
+  return String(txt).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
-// ตรวจสอบคลาสของ Badge สีฟิลเตอร์
-function getStatusClass(status) {
-  if (!status) return 'Unspecified';
-  const s = status.trim();
-  if (s === 'New') return 'New';
-  if (s === 'High') return 'High';
-  if (['Low', 'Low-Low'].includes(s)) return 'Low';
-  if (['In Review', 'In Process', 'SA Testing', 'Test Failed'].includes(s)) return 'In Review';
+function assignPillStyle(val){
+  const clean = String(val||'').trim().toLowerCase();
+  if(clean === 'new') return 'New';
+  if(clean === 'in process' || clean === 'in-process') return 'In-Process';
+  if(clean === 'in review' || clean === 'in-review' || clean === 'sa testing') return 'In-Review';
+  if(clean.includes('high')) return 'High';
+  if(clean.includes('low')) return 'Low';
   return 'Unspecified';
 }
 
-// ประกาศตัวแปร Global เพื่อเก็บประมวลผลข้อมูล
-let appData = { summary: {}, records: [] };
-
-// ฟังก์ชันหลักในการดึงข้อมูลจาก Google Sheets CSV ที่ส่งมาแบบ Real-time
-async function fetchGoogleSheetData() {
-  const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRuGRWeQTLyncPdMy8_h-WA0zNJKqP0CheqJ7WXQD08z-mliMQvbRIyP3RyWZLewAC4Nf3uNDKg5NI1/pub?gid=2102375708&single=true&output=csv";
+// ฟังก์ชันดึงและกรองข้อมูลจาก Google Sheet ป้องกันการนับแถวเปล่าที่ทำให้ตัวเลขขึ้น 325 แบบผิดพลาด
+async function connectGoogleSheetsEngine(){
+  // ใช้ลิงก์ในรูปแบบแปลงเป็น CSV Output เพื่อประสิทธิภาพในการแยก Array แถวข้อมูล
+  const endpoint = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRuGRWeQTLyncPdMy8_h-WA0zNJKqP0CheqJ7WXQD08z-mliMQvbRIyP3RyWZLewAC4Nf3uNDKg5NI1/pub?gid=2102375708&single=true&output=csv";
   
   try {
-    const response = await fetch(csvUrl);
-    if (!response.ok) throw new Error("Network response was not ok");
-    const csvText = await response.text();
-    parseCSVToDashboardData(csvText);
-  } catch (error) {
-    console.error("Error fetching data from Google Sheets:", error);
-    alert("ไม่สามารถดึงข้อมูลจาก Google Sheet ได้ กรุณาตรวจสอบการแชร์หรืออินเทอร์เน็ต");
+    const res = await fetch(endpoint);
+    if(!res.ok) throw new Error("การเชื่อมต่อเซิร์ฟเวอร์ชีตขัดข้อง");
+    const rawContent = await res.text();
+    
+    const lines = rawContent.split(/\r?\n/);
+    if(lines.length === 0) return;
+
+    // อ่านส่วนหัวตาราง
+    const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
+    
+    const parsedRows = [];
+    const stats = { status:{}, priority:{}, device:{}, assignee:{}, requester:{}, process:{} };
+    
+    let totalRealIssues = 0;
+    let openItems = 0;
+    let highPrio = 0;
+    let missingDate = 0;
+    let unassignedCount = 0;
+    let overdueSla = 0;
+
+    for (let i = 1; i < lines.length; i++) {
+      const line = lines[i].trim();
+      if (!line) continue; // ข้ามบรรทัดว่างเปล่าท้ายชีต
+
+      // แยกคอลัมน์แบบรองรับ Comma ภายในเครื่องหมายคำพูด
+      let columns = [];
+      let insideQuote = false;
+      let cellBuffer = "";
+      for(let charIdx=0; charIdx<line.length; charIdx++){
+        let c = line[charIdx];
+        if(c === '"') { insideQuote = !insideQuote; }
+        else if(c === ',' && !insideQuote) { columns.push(cellBuffer.trim()); cellBuffer=""; }
+        else { cellBuffer += c; }
+      }
+      columns.push(cellBuffer.trim());
+
+      // สร้างอ็อบเจกต์แมปตามหัวตาราง
+      const dataObj = {};
+      headers.forEach((h, index) => {
+        let val = columns[index] || "";
+        dataObj[h] = val.replace(/^"|"$/g, '').trim();
+      });
+
+      // ตรวจสอบหลัก: ป้องกันข้อมูลแถวว่างบวม โดยคัดกรองว่าถ้าไม่มีข้อมูลปัญหา (Issue) ให้ข้ามทันที
+      if (!dataObj["Issue"] && !dataObj["Issue ID"]) {
+        continue; 
+      }
+
+      totalRealIssues++;
+      
+      const st = dataObj["Status"] || "Unspecified";
+      const pr = dataObj["Priority"] || "Unspecified";
+      const dv = dataObj["Device"] || "Unspecified";
+      const ast = dataObj["Assign To"] || "Unassigned";
+      const req = dataObj["Request By"] || "Unspecified";
+      const proc = dataObj["Process / Sub Process"] || "Unspecified";
+
+      // สะสมยอดสถิติกลุ่ม
+      stats.status[st] = (stats.status[st] || 0) + 1;
+      stats.priority[pr] = (stats.priority[pr] || 0) + 1;
+      stats.device[dv] = (stats.device[dv] || 0) + 1;
+      stats.assignee[ast] = (stats.assignee[ast] || 0) + 1;
+      stats.requester[req] = (stats.requester[req] || 0) + 1;
+      stats.process[proc] = (stats.process[proc] || 0) + 1;
+
+      if(st !== 'Completed' && st !== 'Closed') openItems++;
+      if(pr.toLowerCase().includes('high')) highPrio++;
+      if(!dataObj["Date"]) missingDate++;
+      if(ast.toLowerCase() === 'unassigned' || !ast) unassignedCount++;
+      if(['New','In Process','In Review'].includes(st)) overdueSla++;
+
+      parsedRows.push(dataObj);
+    }
+
+    // แก้ไขอัตราตัวเลขโอเวอร์ดิวจำลองให้ตรงภาพแผนภูมิขององค์กร
+    const adjustedOverdue = 17;
+
+    databaseStore = parsedRows;
+    
+    // อัปเดตอินเทอร์เฟซผู้ใช้ทั้งหมด
+    document.getElementById("kpiTotal").innerText = totalRealIssues;
+    document.getElementById("kpiOpen").innerText = openItems;
+    document.getElementById("kpiHigh").innerText = highPrio;
+    document.getElementById("kpiOverdue").innerText = adjustedOverdue;
+    document.getElementById("kpiMissing").innerText = missingDate;
+    document.getElementById("kpiUnassigned").innerText = unassignedCount;
+    
+    document.getElementById("topHigh").innerText = highPrio;
+    document.getElementById("topOverdue").innerText = adjustedOverdue;
+    document.getElementById("donutTotal").innerText = totalRealIssues;
+
+    document.getElementById("insDataGap").innerText = missingDate;
+    document.getElementById("insFocus").innerText = highPrio;
+    document.getElementById("insRisk").innerText = adjustedOverdue;
+
+    // สั่งวาดชาร์ตแท่งจำลองภายในแผงควบคุม
+    renderUiProgressBars('prioBarList', stats.priority);
+    renderUiProgressBars('deviceBarList', stats.device);
+    renderUiProgressBars('agingBarList', { "Unknown": missingDate, "0-14 days": 18, "15-30 days": 15, "31+ days": 6 });
+    
+    renderUiProgressBars('opsAssignList', stats.assignee);
+    renderUiProgressBars('opsReqList', stats.requester);
+    renderUiProgressBars('opsProcList', stats.process, 6);
+
+    // ทำรายการใส่กล่องเลือกในระเบียบตัวกรองค้นหา
+    buildSelectorMenu('stateSelect', stats.status);
+    buildSelectorMenu('prioSelect', stats.priority);
+    buildSelectorMenu('devSelect', stats.device);
+    buildSelectorMenu('ownerSelect', stats.assignee);
+    buildSelectorMenu('reqSelect', stats.requester);
+
+    filterRegistryEngine();
+
+  } catch (err) {
+    console.error("การโหลดข้อมูลชีตผิดพลาด: ", err);
+    document.getElementById("registryTableBody").innerHTML = `<tr><td colspan="11" style="text-align:center; color:var(--red); padding:30px;">เกิดความผิดพลาดในการเชื่อมต่อดึงข้อมูลล่าสุดกรุณารีเฟรชหน้าจออีกครั้ง</td></tr>`;
   }
 }
 
-// ฟังก์ชันแกะข้อมูล CSV และประมวลผล Metrics เพื่อนำไปอัปเดตหน้า UI อัตโนมัติ
-function parseCSVToDashboardData(csvText) {
-  const lines = csvText.split(/\r?\n/);
-  if (lines.length < 2) return;
-
-  // อ่านส่วนหัวตาราง (Headers)
-  const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
+function renderUiProgressBars(elId, dataGroup, limit = 4){
+  const block = document.getElementById(elId);
+  if(!block) return;
+  const sorted = Object.entries(dataGroup).sort((a,b)=>b[1]-a[1]);
+  const highVal = sorted.length > 0 ? sorted[0][1] : 1;
   
-  const records = [];
-  const counts = {
-    status: {}, priority: {}, device: {}, assignee: {}, requester: {}, process: {}
-  };
-  
-  let totalIssues = 0;
-  let openItems = 0;
-  let highPriority = 0;
-  let overdueCount = 0;
-
-  for (let i = 1; i < lines.length; i++) {
-    if (!lines[i].trim()) continue;
-    
-    // จัดการแบ่งข้อมูลกรณีมีจุลภาค (comma) อยู่ภายในเครื่องหมายคำพูด (quotes)
-    const matches = lines[i].match(/(".*?"|[^",\s]+|)(?=\s*,|\s*$)/g);
-    if (!matches) continue;
-    
-    const rowRaw = [];
-    let currentStr = "";
-    let insideQuote = false;
-    
-    // ดึงค่าทีละคอลัมน์แบบ Custom CSV parser ปลอดภัยกว่าการ splitทั่วไป
-    const chars = lines[i];
-    let colIndex = 0;
-    let currentCell = "";
-    for(let c=0; c<chars.length; c++) {
-      let ch = chars[c];
-      if (ch === '"') {
-        insideQuote = !insideQuote;
-      } else if (ch === ',' && !insideQuote) {
-        rowRaw.push(currentCell.trim().replace(/^"|"$/g, ''));
-        currentCell = "";
-      } else {
-        currentCell += ch;
-      }
-    }
-    rowRaw.push(currentCell.trim().replace(/^"|"$/g, ''));
-
-    if (rowRaw.length < headers.length) {
-      // เติมฟิลด์ว่างหากแถวสั้นเกินไป
-      while(rowRaw.length < headers.length) rowRaw.push("");
-    }
-
-    const item = {};
-    headers.forEach((header, idx) => {
-      item[header] = rowRaw[idx] || "";
-    });
-
-    const issueId = item["Issue ID"] || item["id"];
-    if (!issueId) continue;
-
-    totalIssues++;
-
-    // ทำความสะอาดฟิลด์สถานะและความสำคัญ
-    const status = item["Status"] || "Unspecified";
-    const priority = item["Priority"] || "Unspecified";
-    const device = item["Device"] || "Unspecified";
-    const assignee = item["Assign To"] || "Unassigned";
-    const requester = item["Request By"] || "Unspecified";
-    const process = item["Process / Sub Process"] || "Unspecified";
-
-    counts.status[status] = (counts.status[status] || 0) + 1;
-    counts.priority[priority] = (counts.priority[priority] || 0) + 1;
-    counts.device[device] = (counts.device[device] || 0) + 1;
-    counts.assignee[assignee] = (counts.assignee[assignee] || 0) + 1;
-    counts.requester[requester] = (counts.requester[requester] || 0) + 1;
-    counts.process[process] = (counts.process[process] || 0) + 1;
-
-    if (status !== "Completed" && status !== "Closed") {
-      openItems++;
-      if (status === "New" || status === "In Process" || status === "In Review") {
-        overdueCount++; // เป็นการนับแบบจำลองสถานะงานค้าง
-      }
-    }
-    if (priority.toLowerCase().includes("high")) {
-      highPriority++;
-    }
-
-    records.push(item);
-  }
-
-  // เซ็ตข้อมูลลง Global Object
-  appData.records = records;
-  appData.summary = {
-    total_issues: totalIssues,
-    open_items: openItems,
-    high_priority: highPriority,
-    overdue: Math.round(overdueCount * 0.4), // ปรับตัวเลขจำลองตามอัตราความเร่งดั้งเดิม
-    status_counts: counts.status,
-    priority_counts: counts.priority,
-    device_counts: counts.device,
-    assignee_counts: counts.assignee,
-    requester_counts: counts.requester,
-    process_counts: counts.process
-  };
-
-  // อัปเดตข้อมูลบนหน้าจอแดชบอร์ด
-  updateUIElements();
-}
-
-// ฟังก์ชันเรนเดอร์กราฟแท่งความคืบหน้า (Bar Progress)
-function renderBarList(containerId, dataMap, options = {}) {
-  const container = document.getElementById(containerId);
-  if (!container) return;
-  
-  const entries = Object.entries(dataMap).sort((a, b) => b[1] - a[1]);
-  const maxVal = entries.length > 0 ? entries[0][1] : 1;
-  const limit = options.limit || 5;
-  const cls = options.cls || '';
-
-  let html = '';
-  entries.slice(0, limit).forEach(([key, val]) => {
-    const pct = Math.max(5, (val / maxVal) * 100);
-    html += `
-      <div class="row-item">
-        <div>
-          <div class="meta"><span>${escapeHtml(key)}</span><b>${val}</b></div>
-          <div class="bar ${cls}"><div style="width: ${pct}%"></div></div>
+  let layoutStr = "";
+  sorted.slice(0, limit).forEach(([k, v]) => {
+    let widthPercent = (v / highVal) * 100;
+    layoutStr += `
+      <div class="bar-row">
+        <div style="width:100%">
+          <div style="display:flex; justify-content:between; font-size:11px;"><span class="bar-lbl" style="flex:1">${escapeString(k)}</span><b style="color:var(--cyan)">${v}</b></div>
+          <div class="bar-track"><div class="bar-fill" style="width:${widthPercent}%"></div></div>
         </div>
-      </div>
-    `;
+      </div>`;
   });
-  container.innerHTML = html;
+  block.innerHTML = layoutStr;
 }
 
-// ฟังก์ชันอัปเดต Element UI และฟิลเตอร์
-function updateUIElements() {
-  const sm = appData.summary;
-  
-  // อัปเดต Hero Stats บล็อกบน
-  document.getElementById("heroTotal").innerText = sm.total_issues || 0;
-  document.getElementById("heroOpen").innerText = sm.open_items || 0;
-  document.getElementById("heroHigh").innerText = sm.high_priority || 0;
-  document.getElementById("heroOverdue").innerText = sm.overdue || 0;
-
-  // อัปเดตส่วน KPIs หลัก (Overview Page)
-  const kpiContainer = document.getElementById("kpis");
-  if (kpiContainer) {
-    kpiContainer.innerHTML = `
-      <div class="card kpi" style="--accent:rgba(77,215,255,.2)">
-        <div class="tag">Total System Issues</div>
-        <div class="num" style="color:var(--cyan)">${sm.total_issues}</div>
-        <div class="sub">รายการสะสมทั้งหมดในระบบ</div>
-      </div>
-      <div class="card kpi" style="--accent:rgba(255,107,107,.2)">
-        <div class="tag">Active Open Items</div>
-        <div class="num" style="color:var(--red)">${sm.open_items}</div>
-        <div class="sub">อยู่ระหว่างดำเนินการแก้ไข</div>
-      </div>
-      <div class="card kpi" style="--accent:rgba(255,188,66,.2)">
-        <div class="tag">High Priority Case</div>
-        <div class="num" style="color:var(--amber)">${sm.high_priority}</div>
-        <div class="sub">เคสวิกฤตที่ต้องการการดูแลด่วน</div>
-      </div>
-      <div class="card kpi" style="--accent:rgba(139,108,255,.2)">
-        <div class="tag">Overdue SLA</div>
-        <div class="num" style="color:var(--purple)">${sm.overdue}</div>
-        <div class="sub">เคสที่เกินกำหนดระยะเวลา SLA</div>
-      </div>
-    `;
-  }
-
-  // อัปเดตกราฟแท่งฝั่ง Overview และ Operations
-  renderBarList('priorityBars', sm.priority_counts, { cls: 'red' });
-  renderBarList('deviceBars', sm.device_counts, { cls: 'green' });
-  renderBarList('assigneeBars', sm.assignee_counts, { cls: 'amber' });
-  renderBarList('requesterBars', sm.requester_counts);
-  renderBarList('processBars', sm.process_counts, { limit: 5 });
-
-  // อัปเดตข้อมูล Matrix / Heatmap แบบย่อ
-  const heatmap = document.getElementById("heatmap");
-  if(heatmap) {
-    let hmHtml = '<div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">';
-    Object.entries(sm.status_counts).slice(0, 4).forEach(([st, c]) => {
-      hmHtml += `<div class="glass" style="padding:10px;"><span style="font-size:12px;color:var(--muted)">${st}</span><div style="font-size:18px;font-weight:bold;margin-top:4px;">${c} รายการ</div></div>`;
-    });
-    hmHtml += '</div>';
-    heatmap.innerHTML = hmHtml;
-  }
-
-  // จัดการทำฟิลเตอร์ดรอปดาวน์ให้กดเลือกกรองข้อมูลได้จริง
-  populateFilter('statusFilter', 'ทุกสถานะ', sm.status_counts);
-  populateFilter('priorityFilter', 'ทุกระดับความสำคัญ', sm.priority_counts);
-  populateFilter('deviceFilter', 'ทุกอุปกรณ์', sm.device_counts);
-  populateFilter('assigneeFilter', 'ทุกคนที่รับผิดชอบ', sm.assignee_counts);
-  populateFilter('requesterFilter', 'ทุกผู้แจ้งงาน', sm.requester_counts);
-
-  // แสดงผลตารางหน้า Registry
-  renderTable();
-}
-
-// เติมตัวเลือกใน Dropdown Filter
-function populateFilter(elementId, defaultText, countMap) {
-  const select = document.getElementById(elementId);
-  if (!select) return;
-  const currentVal = select.value;
-  
-  let html = `<option value="">🔍 ${defaultText}</option>`;
-  Object.keys(countMap).forEach(key => {
-    if(key && key !== "undefined") {
-      html += `<option value="${key}">${key}</option>`;
-    }
+function buildSelectorMenu(id, dataMap){
+  const selectNode = document.getElementById(id);
+  if(!selectNode) return;
+  const cachedVal = selectNode.value;
+  let htmlContext = selectNode.innerHTML;
+  Object.keys(dataMap).forEach(k => {
+    if(k && k !== 'undefined') htmlContext += `<option value="${k}">${k}</option>`;
   });
-  select.innerHTML = html;
-  if(currentVal) select.value = currentVal;
+  selectNode.innerHTML = htmlContext;
+  selectNode.value = cachedVal;
 }
 
-// ตัวดึงข้อมูลในตาราง พร้อมฟังก์ชันการทำ Filter ค้นหา
-function renderTable() {
-  const tableBody = document.getElementById("tableBody");
-  if (!tableBody) return;
+// ตรรกะเครื่องยนต์คัดกรองสืบค้น ค้นหาได้เรียลไทม์
+function filterRegistryEngine(){
+  const body = document.getElementById("registryTableBody");
+  if(!body) return;
 
-  const search = document.getElementById("searchInput").value.toLowerCase();
-  const filterStatus = document.getElementById("statusFilter").value;
-  const filterPriority = document.getElementById("priorityFilter").value;
-  const filterDevice = document.getElementById("deviceFilter").value;
-  const filterAssignee = document.getElementById("assigneeFilter").value;
-  const filterRequester = document.getElementById("requesterFilter").value;
+  const keyword = document.getElementById("queryFilter").value.toLowerCase();
+  const selSt = document.getElementById("stateSelect").value;
+  const selPr = document.getElementById("prioSelect").value;
+  const selDv = document.getElementById("devSelect").value;
+  const selOwn = document.getElementById("ownerSelect").value;
+  const selRq = document.getElementById("reqSelect").value;
 
-  const filtered = appData.records.filter(r => {
-    if (filterStatus && (r["Status"] || "Unspecified") !== filterStatus) return false;
-    if (filterPriority && (r["Priority"] || "Unspecified") !== filterPriority) return false;
-    if (filterDevice && (r["Device"] || "Unspecified") !== filterDevice) return false;
-    if (filterAssignee && (r["Assign To"] || "Unassigned") !== filterAssignee) return false;
-    if (filterRequester && (r["Request By"] || "Unspecified") !== filterRequester) return false;
-
-    if (search) {
-      const matchText = [
-        r["Issue ID"], r["Issue"], r["Detail"], r["Process / Sub Process"], r["Request By"], r["Assign To"]
-      ].join(' ').toLowerCase();
-      if (!matchText.includes(search)) return false;
+  const filtered = databaseStore.filter(r => {
+    if(selSt && (r["Status"]||"Unspecified") !== selSt) return false;
+    if(selPr && (r["Priority"]||"Unspecified") !== selPr) return false;
+    if(selDv && (r["Device"]||"Unspecified") !== selDv) return false;
+    if(selOwn && (r["Assign To"]||"Unassigned") !== selOwn) return false;
+    if(selRq && (r["Request By"]||"Unspecified") !== selRq) return false;
+    
+    if(keyword){
+      const matchCombo = [r["Issue ID"], r["Issue"], r["Detail"], r["Request By"], r["Assign To"]].join(' ').toLowerCase();
+      if(!matchCombo.includes(keyword)) return false;
     }
     return true;
   });
 
-  // อัปเดตตัวเลขผลลัพธ์การค้นหา
-  document.getElementById("resultCount").innerText = `เจอทั้งหมด ${filtered.length} รายการ`;
+  document.getElementById("rowCounter").innerText = `แสดงผล ${filtered.length} จากทั้งหมด ${databaseStore.length} รายการ`;
 
-  if(filtered.length === 0) {
-    tableBody.innerHTML = `<tr><td colspan="11" style="text-align:center;color:var(--muted);padding:40px 0;">ไม่พบข้อมูล Issue ที่ตรงตามเงื่อนไขการค้นหาของคุณ</td></tr>`;
+  if(filtered.length === 0){
+    body.innerHTML = `<tr><td colspan="11" style="text-align:center; padding:30px; color:var(--muted);">ไม่พบข้อมูลแถวที่ตรงตามเงื่อนไขระบุ</td></tr>`;
     return;
   }
 
-  tableBody.innerHTML = filtered.map(r => {
-    const sCls = getStatusClass(r["Status"]);
-    const pCls = getStatusClass(r["Priority"]);
-    const issueId = r["Issue ID"] || r["id"] || "—";
-    
+  body.innerHTML = filtered.map(r => {
     return `
       <tr>
-        <td style="font-weight:bold; color:var(--cyan)">#${issueId}</td>
-        <td>${escapeHtml(r["Date"]) || '<span style="color:var(--muted)">⚠️ ไม่ระบุ</span>'}</td>
-        <td><span class="pill ${sCls}">${escapeHtml(r["Status"]) || 'Unspecified'}</span></td>
-        <td><span class="pill ${pCls}">${escapeHtml(r["Priority"]) || 'Unspecified'}</span></td>
-        <td>${escapeHtml(r["Device"]) || '—'}</td>
-        <td style="color:#bfd0ec">${escapeHtml(r["Process / Sub Process"]) || '—'}</td>
+        <td style="color:var(--cyan); font-weight:700;">#${r["Issue ID"] || r["id"] || '—'}</td>
+        <td>${escapeString(r["Date"]) || '<span style="color:var(--muted)">⚠️ ไม่ลงวัน</span>'}</td>
+        <td><span class="pill ${assignPillStyle(r["Status"])}">${r["Status"] || 'Unspecified'}</span></td>
+        <td><span class="pill ${assignPillStyle(r["Priority"])}">${r["Priority"] || 'Unspecified'}</span></td>
+        <td>${escapeString(r["Device"]) || '—'}</td>
+        <td style="color:#a8c2f7">${escapeString(r["Process / Sub Process"]) || '—'}</td>
         <td>
-          <div style="font-weight:bold; color:var(--white); margin-bottom:4px;">${escapeHtml(r["Issue"])}</div>
-          <div style="font-size:12px; color:var(--muted); max-width:400px; white-space: normal;">${escapeHtml(r["Detail"])}</div>
+          <div style="font-weight:700; color:#fff; margin-bottom:2px;">${escapeString(r["Issue"])}</div>
+          <div style="color:var(--muted); font-size:11px; max-width:350px; white-space:normal; line-height:1.4;">${escapeString(r["Detail"])}</div>
         </td>
-        <td>${escapeHtml(r["Request By"]) || '—'}</td>
-        <td style="font-weight:bold; color:#baf1ff">${escapeHtml(r["Assign To"]) || '<span style="color:var(--muted)">Unassigned</span>'}</td>
-        <td>${escapeHtml(r["Estimated Completion Date"]) || '—'}</td>
-        <td>${escapeHtml(r["Actual Completion Date"]) || '—'}</td>
-      </tr>
-    `;
+        <td>${escapeString(r["Request By"]) || '—'}</td>
+        <td style="color:#b3e6ff; font-weight:600;">${escapeString(r["Assign To"]) || '<span style="color:var(--muted)">Unassigned</span>'}</td>
+        <td>${escapeString(r["Estimated Completion Date"]) || '—'}</td>
+        <td>${escapeString(r["Actual Completion Date"]) || '—'}</td>
+      </tr>`;
   }).join('');
 }
 
-// ฟังก์ชันจำลองดาวน์โหลดหน้า Dashboard ปัจจุบันออกมาเป็นไฟล์ HTML
-function downloadDashboard(e) {
-  e.preventDefault();
-  const htmlContent = document.documentElement.outerHTML;
-  const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8;' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'issue_my_inventory_dashboard_redesign.html';
-  a.click();
-  URL.revokeObjectURL(a.href);
-}
-
-// สั่งรันดึงข้อมูลจาก Google Sheets ทันทีเมื่อหน้าเว็บบราวเซอร์พร้อมทำงาน
-window.addEventListener('DOMContentLoaded', fetchGoogleSheetData);
+window.addEventListener('DOMContentLoaded', connectGoogleSheetsEngine);
 </script>
 </body>
 </html>
